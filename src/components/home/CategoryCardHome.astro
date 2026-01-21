@@ -1,0 +1,43 @@
+---
+import { Icon } from "astro-icon/components";
+
+interface Props {
+    name: string;
+    image: string;
+    path: string;
+}
+
+const { name, image, path } = Astro.props;
+---
+
+<a href={path} class="group cursor-pointer block">
+    <!-- Card -->
+    <div
+        class="aspect-square overflow-hidden bg-slate-100 flex items-center justify-center relative"
+    >
+        <img
+            src={image}
+            alt={name}
+            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out"
+        />
+        <!-- Optional Overlay on Hover -->
+        <div
+            class="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+        >
+        </div>
+    </div>
+    <!-- Category Name -->
+    <div
+        class="mt-4 flex items-center justify-between border-b-2 border-transparent group-hover:border-primary transition-all duration-300 pb-2"
+    >
+        <span
+            class="text-sm font-black uppercase tracking-[0.2em] text-slate-900"
+        >
+            {name}
+        </span>
+        <Icon
+            name="lucide:arrow-right"
+            class="w-4 h-4 text-slate-900 transition-transform group-hover:translate-x-1"
+        />
+    </div>
+</a>
