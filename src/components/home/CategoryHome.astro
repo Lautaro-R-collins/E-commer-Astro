@@ -1,5 +1,5 @@
 ---
-import { Icon } from "astro-icon/components";
+import CategoryCardHome from "./CategoryCardHome.astro";
 
 const categories = [
     {
@@ -36,28 +36,11 @@ const categories = [
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {
                 categories.map((category) => (
-                    <a href={category.path} class="group cursor-pointer block">
-                        <!-- Card -->
-                        <div class="aspect-square overflow-hidden bg-slate-100 flex items-center justify-center relative">
-                            <img
-                                src={category.image}
-                                alt={category.name}
-                                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out"
-                            />
-                            <!-- Optional Overlay on Hover -->
-                            <div class="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                        </div>
-                        <!-- Category Name -->
-                        <div class="mt-4 flex items-center justify-between border-b-2 border-transparent group-hover:border-primary transition-all duration-300 pb-2">
-                            <span class="text-sm font-black uppercase tracking-[0.2em] text-slate-900">
-                                {category.name}
-                            </span>
-                            <Icon
-                                name="lucide:arrow-right"
-                                class="w-4 h-4 text-slate-900 transition-transform group-hover:translate-x-1"
-                            />
-                        </div>
-                    </a>
+                    <CategoryCardHome
+                        name={category.name}
+                        image={category.image}
+                        path={category.path}
+                    />
                 ))
             }
         </div>
