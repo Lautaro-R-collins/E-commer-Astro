@@ -1,70 +1,89 @@
 ---
+import { Icon } from "astro-icon/components";
 
+const announcements = [
+  "Free Shipping on all orders over $50",
+  "Summer Sale: Up to 50% OFF selected items",
+  "12 Installments Interest-Free on Electronics",
+  "New Arrivals! Check out the latest Tech",
+];
 ---
 
 <link
-    rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
 />
 
 <div
-    class="bg-black text-white text-xs sm:text-sm py-2 relative z-50 overflow-hidden"
+  id="announcement-bar"
+  class="bg-black text-white text-xs sm:text-sm py-2 relative z-50 overflow-hidden transition-all duration-300"
 >
-    <div class="max-w-7xl mx-auto px-4 text-center">
-        <div class="swiper announcement-swiper h-6">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide flex items-center justify-center">
-                    <span class="font-medium"
-                        >Free Shipping on all orders over $50</span
-                    >
-                </div>
-                <div class="swiper-slide flex items-center justify-center">
-                    <span class="font-medium"
-                        >Summer Sale: Up to 50% OFF selected items</span
-                    >
-                </div>
-                <div class="swiper-slide flex items-center justify-center">
-                    <span class="font-medium"
-                        >12 Installments Interest-Free on Electronics</span
-                    >
-                </div>
-                <div class="swiper-slide flex items-center justify-center">
-                    <span class="font-medium"
-                        >New Arrivals! Check out the latest Tech</span
-                    >
-                </div>
-            </div>
-        </div>
+  <div class="max-w-7xl mx-auto px-4 text-center pr-10">
+    <div class="swiper announcement-swiper h-6">
+      <div class="swiper-wrapper">
+        {announcements.map((text) => (
+          <div class="swiper-slide flex items-center justify-center">
+            <span class="font-medium">{text}</span>
+          </div>
+        ))}
+      </div>
     </div>
+  </div>
+
+  <!-- Close Button -->
+  <button
+    id="announcement-close"
+    class="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-white/70 hover:text-white transition-colors cursor-pointer z-50 rounded-full hover:bg-white/10"
+    aria-label="Close announcement bar"
+  >
+    <Icon name="lucide:x" class="w-4 h-4" />
+  </button>
 </div>
 
 <script>
-    import Swiper from "swiper";
-    import { Autoplay } from "swiper/modules";
+  import Swiper from "swiper";
+  import { Autoplay } from "swiper/modules";
 
-    const initAnnouncementSwiper = () => {
-        new Swiper(".announcement-swiper", {
-            modules: [Autoplay],
-            direction: "vertical",
-            loop: true,
-            autoplay: {
-                delay: 3000,
-                disableOnInteraction: false,
-            },
-            allowTouchMove: false, // Prevent swiping manually since it's just text
-        });
-    };
+  const initAnnouncementSwiper = () => {
+    const swiperContainer = document.querySelector(".announcement-swiper");
 
-    initAnnouncementSwiper();
-    document.addEventListener("astro:after-swap", initAnnouncementSwiper);
+    if (swiperContainer) {
+      new Swiper(".announcement-swiper", {
+        modules: [Autoplay],
+        direction: "vertical",
+        loop: true,
+        autoplay: {
+          delay: 3000,
+          disableOnInteraction: false,
+        },
+        allowTouchMove: false,
+      });
+    }
+
+    const closeBtn = document.getElementById("announcement-close");
+    const bar = document.getElementById("announcement-bar");
+
+    if (closeBtn && bar) {
+      closeBtn.addEventListener("click", () => {
+        bar.style.height = "0";
+        bar.style.padding = "0";
+        bar.style.opacity = "0";
+        setTimeout(() => {
+          bar.style.display = "none";
+        }, 300);
+      });
+    }
+  };
+
+  initAnnouncementSwiper();
+  document.addEventListener("astro:after-swap", initAnnouncementSwiper);
 </script>
 
 <style>
-    /* Ensure slides are centered vertically */
-    .swiper-slide {
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+  .swiper-slide {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 </style>
