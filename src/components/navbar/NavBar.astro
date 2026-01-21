@@ -1,0 +1,70 @@
+---
+import { Icon } from "astro-icon/components";
+---
+
+<nav class="navbar bg-base-100 shadow-md px-4 sm:px-8 sticky top-0 z-50">
+    <!-- Left Side: Logo -->
+    <div class="navbar-start">
+        <a href="/" class="flex items-center gap-2 group">
+            <div
+                class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center group-hover:rotate-12 transition-transform shadow-sm"
+            >
+                <Icon
+                    name="lucide:shopping-bag"
+                    class="w-5 h-5 text-primary-content"
+                />
+            </div>
+            <span
+                class="text-xl font-bold tracking-tighter sm:text-2xl gradient-text"
+            >
+                E-COMMER
+            </span>
+        </a>
+    </div>
+
+    <!-- Middle Space -->
+    <div class="navbar-center hidden lg:flex">
+        <!-- Optional: Add main navigation links here if needed later -->
+    </div>
+
+    <!-- Right Side: Icons -->
+    <div class="navbar-end gap-2 sm:gap-4">
+        <button
+            class="btn btn-ghost btn-circle hover:bg-primary/10 transition-colors"
+            aria-label="Favorites"
+        >
+            <Icon
+                name="lucide:heart"
+                class="w-6 h-6 hover:text-primary transition-colors"
+            />
+        </button>
+        <button
+            class="btn btn-ghost btn-circle hover:bg-primary/10 transition-colors"
+            aria-label="Shopping Cart"
+        >
+            <div class="indicator">
+                <Icon
+                    name="lucide:shopping-cart"
+                    class="w-6 h-6 hover:text-primary transition-colors"
+                />
+                <span
+                    class="badge badge-sm badge-primary indicator-item border-none"
+                    >0</span
+                >
+            </div>
+        </button>
+    </div>
+</nav>
+
+<style>
+    .gradient-text {
+        background: linear-gradient(
+            135deg,
+            var(--color-primary) 0%,
+            #6366f1 100%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+</style>
