@@ -1,0 +1,204 @@
+---
+import { Icon } from "astro-icon/components";
+---
+
+<section class="relative w-full overflow-hidden">
+    <!-- Swiper Container -->
+    <div class="swiper hero-swiper h-[350px] sm:h-[450px] md:h-[500px]">
+        <div class="swiper-wrapper">
+            <!-- Slide 1: Laptops -->
+            <div class="swiper-slide relative">
+                <img
+                    src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?q=80&w=1920&auto=format&fit=crop"
+                    alt="Luxury Laptops"
+                    class="absolute inset-0 w-full h-full object-cover"
+                />
+                <div
+                    class="absolute inset-0 bg-black/40 flex items-center justify-center text-center px-4"
+                >
+                    <div class="max-w-3xl animate-fade-in">
+                        <h2
+                            class="text-4xl md:text-6xl font-bold text-white mb-4 tracking-tight"
+                        >
+                            Next-Gen Performance
+                        </h2>
+                        <p
+                            class="text-lg md:text-xl text-white/90 mb-8 max-w-xl mx-auto"
+                        >
+                            Discover our new collection of high-performance
+                            laptops designed for creators and professionals.
+                        </p>
+                        <a
+                            href="/shop/laptops"
+                            class="btn btn-primary btn-lg rounded-full px-8 shadow-xl hover:scale-105 transition-transform"
+                        >
+                            Shop Laptops
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 2: Smartphones -->
+            <div class="swiper-slide relative">
+                <img
+                    src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=1920&auto=format&fit=crop"
+                    alt="Modern Smartphones"
+                    class="absolute inset-0 w-full h-full object-cover"
+                />
+                <div
+                    class="absolute inset-0 bg-linear-to-r from-black/60 to-transparent flex items-center justify-start px-8 md:px-24"
+                >
+                    <div class="max-w-2xl text-left">
+                        <span
+                            class="badge badge-primary mb-4 p-4 font-bold uppercase tracking-widest"
+                            >New Arrival</span
+                        >
+                        <h2
+                            class="text-4xl md:text-6xl font-bold text-white mb-4 tracking-tight"
+                        >
+                            Smart Connections
+                        </h2>
+                        <p class="text-lg md:text-xl text-white/90 mb-8">
+                            Stay ahead with the latest mobile technology.
+                            Experience power and elegance in the palm of your
+                            hand.
+                        </p>
+                        <a
+                            href="/shop/phones"
+                            class="btn btn-secondary btn-lg rounded-full px-8 shadow-xl hover:scale-105 transition-transform"
+                        >
+                            Explore Phones
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 3: Gaming -->
+            <div class="swiper-slide relative">
+                <img
+                    src="https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=1920&auto=format&fit=crop"
+                    alt="Gaming Gear"
+                    class="absolute inset-0 w-full h-full object-cover"
+                />
+                <div
+                    class="absolute inset-0 bg-black/50 flex items-center justify-center text-center px-4"
+                >
+                    <div class="max-w-3xl">
+                        <h2
+                            class="text-4xl md:text-6xl font-bold text-white mb-4 tracking-tight"
+                        >
+                            Level Up Your Game
+                        </h2>
+                        <p
+                            class="text-lg md:text-xl text-white/90 mb-8 max-w-xl mx-auto"
+                        >
+                            Immerse yourself in the ultimate gaming experience
+                            with our pro-level gear and custom setups.
+                        </p>
+                        <div class="flex flex-wrap justify-center gap-4">
+                            <a
+                                href="/shop/gaming"
+                                class="btn btn-primary btn-lg rounded-full px-8 shadow-xl hover:shadow-primary/20 transition-all"
+                            >
+                                Get the Gear
+                            </a>
+                            <a
+                                href="/shop/accessories"
+                                class="btn btn-outline btn-white btn-lg rounded-full px-8 text-white hover:bg-white hover:text-black transition-all"
+                            >
+                                Accessories
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div
+            class="hero-next text-white! w-10 h-10 hover:scale-110 transition-transform hidden sm:flex items-center justify-center bg-black/20 hover:bg-black/40 rounded-full cursor-pointer absolute right-4 top-1/2 -translate-y-1/2 z-50"
+        >
+            <Icon name="lucide:chevron-right" class="w-6 h-6" />
+        </div>
+        <div
+            class="hero-prev text-white! w-10 h-10 hover:scale-110 transition-transform hidden sm:flex items-center justify-center bg-black/20 hover:bg-black/40 rounded-full cursor-pointer absolute left-4 top-1/2 -translate-y-1/2 z-50"
+        >
+            <Icon name="lucide:chevron-left" class="w-6 h-6" />
+        </div>
+
+        <!-- Pagination -->
+        <div class="swiper-pagination bottom-8!"></div>
+    </div>
+</section>
+
+<!-- Swiper Styles -->
+<link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+/>
+
+<style>
+    /* Custom Swiper Pagination Colors */
+    :root {
+        --swiper-pagination-color: var(--color-primary);
+        --swiper-pagination-bullet-inactive-color: #fff;
+        --swiper-pagination-bullet-inactive-opacity: 0.5;
+        --swiper-pagination-bullet-size: 10px;
+        --swiper-pagination-bullet-horizontal-gap: 6px;
+    }
+
+    .swiper-pagination-bullet-active {
+        width: 24px;
+        border-radius: 5px;
+        transition: width 0.3s ease;
+    }
+
+    @keyframes fade-in {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .animate-fade-in {
+        animation: fade-in 1s ease-out forwards;
+    }
+</style>
+
+<script>
+    import Swiper from "swiper";
+    import {
+        Navigation,
+        Pagination,
+        Autoplay,
+        EffectFade,
+    } from "swiper/modules";
+
+    const initHeroSwiper = () => {
+        new Swiper(".hero-swiper", {
+            modules: [Navigation, Pagination, Autoplay, EffectFade],
+            loop: true,
+            effect: "fade",
+            autoplay: {
+                delay: 5000,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+            },
+            navigation: {
+                nextEl: ".hero-next",
+                prevEl: ".hero-prev",
+            },
+        });
+    };
+
+    // Initialize on load and after view transitions
+    initHeroSwiper();
+    document.addEventListener("astro:after-swap", initHeroSwiper);
+</script>
