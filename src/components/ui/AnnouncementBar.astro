@@ -1,0 +1,70 @@
+---
+
+---
+
+<link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+/>
+
+<div
+    class="bg-black text-white text-xs sm:text-sm py-2 relative z-50 overflow-hidden"
+>
+    <div class="max-w-7xl mx-auto px-4 text-center">
+        <div class="swiper announcement-swiper h-6">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide flex items-center justify-center">
+                    <span class="font-medium"
+                        >Free Shipping on all orders over $50</span
+                    >
+                </div>
+                <div class="swiper-slide flex items-center justify-center">
+                    <span class="font-medium"
+                        >Summer Sale: Up to 50% OFF selected items</span
+                    >
+                </div>
+                <div class="swiper-slide flex items-center justify-center">
+                    <span class="font-medium"
+                        >12 Installments Interest-Free on Electronics</span
+                    >
+                </div>
+                <div class="swiper-slide flex items-center justify-center">
+                    <span class="font-medium"
+                        >New Arrivals! Check out the latest Tech</span
+                    >
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    import Swiper from "swiper";
+    import { Autoplay } from "swiper/modules";
+
+    const initAnnouncementSwiper = () => {
+        new Swiper(".announcement-swiper", {
+            modules: [Autoplay],
+            direction: "vertical",
+            loop: true,
+            autoplay: {
+                delay: 3000,
+                disableOnInteraction: false,
+            },
+            allowTouchMove: false, // Prevent swiping manually since it's just text
+        });
+    };
+
+    initAnnouncementSwiper();
+    document.addEventListener("astro:after-swap", initAnnouncementSwiper);
+</script>
+
+<style>
+    /* Ensure slides are centered vertically */
+    .swiper-slide {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+</style>
