@@ -1,0 +1,58 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { blogPosts } from "../../data/blogData";
+import BlogCard from "../../components/blog/BlogCard.astro";
+import Breadcrumbs from "../../components/ui/Breadcrumbs.astro";
+
+const url = new URL(Astro.request.url);
+const currentPage = parseInt(url.searchParams.get("page") || "1", 10);
+
+const postsPerPage = 6;
+const totalPages = Math.ceil(blogPosts.length / postsPerPage);
+
+const start = (currentPage - 1) * postsPerPage;
+const end = start + postsPerPage;
+const currentPosts = blogPosts.slice(start, end);
+---
+
+<Layout>
+  <section class="max-w-7xl mx-auto px-4 py-10 lg:py-16">
+    <div class="mb-8">
+      <Breadcrumbs
+        items={[
+          { label: "Home", href: "/" },
+          { label: "Blog", href: "/blog" },
+        ]}
+      />
+    </div>
+
+    <div class="text-center mb-16">
+      <h1 class="text-4xl md:text-5xl font-extrabold mb-4 text-base-content">
+        Nuestro <span class="text-primary">Blog</span>
+      </h1>
+      <p class="text-lg text-base-content/70 max-w-2xl mx-auto">
+        Mantente al día con las últimas noticias, reseñas y guías sobre
+        tecnología y gaming.
+      </p>
+    </div>
+
+    <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+      {currentPosts.map((post) => <BlogCard post={post} />)}
+    </div>
+
+    {
+      totalPages > 1 && (
+        <div class="flex justify-center mt-12 btn-group">
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+            <a
+              href={`/blog?page=${page}`}
+              class={`btn ${currentPage === page ? "btn-primary" : "btn-ghost"}`}
+            >
+              {page}
+            </a>
+          ))}
+        </div>
+      )
+    }
+  </section>
+</Layout>
