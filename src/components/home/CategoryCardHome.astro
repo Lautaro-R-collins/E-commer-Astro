@@ -5,15 +5,26 @@ interface Props {
     name: string;
     image: string;
     path: string;
+    className?: string; // For the outer container (e.g., grid cols)
+    imageClass?: string; // For the inner container (e.g., aspect ratio)
 }
 
-const { name, image, path } = Astro.props;
+const {
+    name,
+    image,
+    path,
+    className,
+    imageClass = "aspect-square",
+} = Astro.props;
 ---
 
-<a href={path} class="group cursor-pointer block">
+<a href={path} class:list={["group cursor-pointer block", className]}>
     <!-- Card -->
     <div
-        class="aspect-square overflow-hidden bg-slate-100 flex items-center justify-center relative"
+        class:list={[
+            "overflow-hidden bg-slate-100 flex items-center justify-center relative",
+            imageClass,
+        ]}
     >
         <img
             src={image}
