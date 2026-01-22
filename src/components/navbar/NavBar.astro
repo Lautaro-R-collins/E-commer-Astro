@@ -3,7 +3,10 @@ import { Icon } from "astro-icon/components";
 import Links from "./Links.astro";
 ---
 
-<div class="sticky top-0 z-50 w-full font-sans">
+<div
+    id="main-navbar"
+    class="sticky top-0 z-[999] w-full font-sans transition-transform duration-300"
+>
     <nav class="navbar bg-base-100 shadow-md px-4 sm:px-8">
         <!-- Left Side: Logo -->
         <div class="navbar-start">
@@ -60,6 +63,35 @@ import Links from "./Links.astro";
     <Links />
 </div>
 
+<script>
+    let lastScrollY = window.scrollY;
+    const navbar = document.getElementById("main-navbar");
+
+    window.addEventListener("scroll", () => {
+        if (!navbar) return;
+
+        const currentScrollY = window.scrollY;
+
+        // Si estamos arriba del todo, siempre mostrar
+        if (currentScrollY <= 0) {
+            navbar.classList.remove("navbar-hidden");
+            lastScrollY = currentScrollY;
+            return;
+        }
+
+        // Detectar dirección del scroll
+        if (currentScrollY > lastScrollY) {
+            // Scroll hacia abajo -> Ocultar
+            navbar.classList.add("navbar-hidden");
+        } else {
+            // Scroll hacia arriba -> Mostrar
+            navbar.classList.remove("navbar-hidden");
+        }
+
+        lastScrollY = currentScrollY;
+    });
+</script>
+
 <style>
     .gradient-text {
         background: linear-gradient(
@@ -70,5 +102,9 @@ import Links from "./Links.astro";
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
+    }
+
+    .navbar-hidden {
+        transform: translateY(-100%);
     }
 </style>
