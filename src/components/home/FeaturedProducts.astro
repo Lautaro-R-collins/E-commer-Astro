@@ -1,0 +1,30 @@
+---
+import { featuredProducts } from "../../data/home";
+import CardProduct from "../products/CardProduct.astro";
+---
+
+<section class="pb-10 bg-base-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between mb-12">
+            <h2
+                class="text-3xl font-black text-slate-900 uppercase tracking-tighter"
+            >
+                Featured Products
+            </h2>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {
+                featuredProducts.map((product) => (
+                    <CardProduct
+                        title={product.title}
+                        price={product.price}
+                        stock={product.stock}
+                        images={product.images}
+                        slug={product.slug}
+                    />
+                ))
+            }
+        </div>
+    </div>
+</section>
