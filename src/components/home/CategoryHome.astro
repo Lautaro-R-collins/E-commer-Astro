@@ -23,6 +23,23 @@ const categories = [
         path: "/category/accessories",
     },
 ];
+
+const featuredLinks = [
+    {
+        name: "About Us",
+        image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80",
+        path: "/about",
+        className: "lg:col-span-2",
+        imageClass: "aspect-square lg:aspect-[2/1]",
+    },
+    {
+        name: "Our Blog",
+        image: "https://images.unsplash.com/photo-1499750310159-52f0f83ad713?auto=format&fit=crop&w=800&q=80",
+        path: "/blog",
+        className: "lg:col-span-2",
+        imageClass: "aspect-square lg:aspect-[2/1]",
+    },
+];
 ---
 
 <section class="py-16 bg-white">
@@ -40,6 +57,17 @@ const categories = [
                         name={category.name}
                         image={category.image}
                         path={category.path}
+                    />
+                ))
+            }
+            {
+                featuredLinks.map((link) => (
+                    <CategoryCardHome
+                        name={link.name}
+                        image={link.image}
+                        path={link.path}
+                        className={link.className}
+                        imageClass={link.imageClass}
                     />
                 ))
             }
