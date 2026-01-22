@@ -1,0 +1,30 @@
+---
+interface BreadcrumbItem {
+  label: string;
+  href?: string;
+}
+
+interface Props {
+  items?: BreadcrumbItem[];
+}
+
+const { items = [] }: Props = Astro.props;
+---
+
+<div class="breadcrumbs textarea-lg font-bold mb-8">
+  <ul>
+    {
+      items.map((item, index) => (
+        <li>
+          {index < items.length - 1 && item.href ? (
+            <a href={item.href} class=" text-gray-500 ">
+              {item.label}
+            </a>
+          ) : (
+            <span class="text-primary">{item.label}</span>
+          )}
+        </li>
+      ))
+    }
+  </ul>
+</div>
