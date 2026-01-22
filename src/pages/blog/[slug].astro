@@ -1,18 +1,144 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import { blogPosts } from "../../data/blogData";
+import Breadcrumbs from "../../components/ui/Breadcrumbs.astro";
 
-export function getStaticPaths() {
-    return [
-        // { params: { slug: 'hello-world' } } // Example
-    ];
+export async function getStaticPaths() {
+  return blogPosts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
 }
 
-const { slug } = Astro.params;
+const { post } = Astro.props;
+
+// Filtrar artículos relacionados
+const relatedPosts = blogPosts.filter((p) => p.slug !== post.slug).slice(0, 2);
 ---
 
 <Layout>
-    <div class="max-w-7xl mx-auto px-4 py-16">
-        <h1 class="text-4xl font-bold">Blog Post: {slug}</h1>
-        <p class="mt-4">Content coming soon...</p>
+  <article class="max-w-4xl mx-auto px-4 py-10 lg:py-16">
+    <div class="mb-8">
+      <Breadcrumbs
+        items={[
+          { label: "Home", href: "/" },
+          { label: "Blog", href: "/blog" },
+          {
+            label: post.title.substring(0, 20) + "...",
+            href: Astro.url.pathname,
+          }, // Truncate for cleaner UI
+        ]}
+      />
     </div>
+
+    <img
+      src={post.image}
+      alt={post.title}
+      class="w-full h-64 md:h-96 object-cover rounded-3xl shadow-xl mb-10"
+    />
+
+    <div class="mb-8 text-center md:text-left">
+      <h1
+        class="text-3xl md:text-5xl font-extrabold text-base-content mb-4 leading-tight"
+      >
+        {post.title}
+      </h1>
+
+      <p
+        class="text-base-content/60 text-sm font-medium flex items-center justify-center md:justify-start gap-2"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-4 w-4"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+          ></path>
+        </svg>
+        {post.date}
+        <span class="mx-1">•</span>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-4 w-4"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+          ></path>
+        </svg>
+        {post.author}
+      </p>
+    </div>
+
+    <div
+      class="prose prose-lg prose-headings:font-bold prose-headings:text-base-content prose-p:text-base-content/80 prose-a:text-primary max-w-none"
+      set:html={post.content}
+    />
+
+    <div class="mt-12 pt-8 border-t border-base-200">
+      <a href="/blog" class="btn btn-outline btn-primary rounded-full gap-2">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-4 w-4"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+        </svg>
+        Volver al Blog
+      </a>
+    </div>
+
+    <!-- Artículos relacionados -->
+    {
+      relatedPosts.length > 0 && (
+        <section class="mt-20">
+          <h2 class="text-3xl font-bold text-base-content mb-8 border-l-4 border-primary pl-4">
+            Artículos Relacionados
+          </h2>
+
+          <div class="grid gap-8 md:grid-cols-2">
+            {relatedPosts.map((p) => (
+              <a
+                href={`/blog/${p.slug}`}
+                class="card bg-base-100 shadow-lg hover:shadow-2xl transition-all duration-300 group overflow-hidden border border-base-200"
+              >
+                <figure class="h-48 overflow-hidden">
+                  <img
+                    src={p.image}
+                    alt={p.title}
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                </figure>
+                <div class="card-body">
+                  <h3 class="card-title text-lg group-hover:text-primary transition-colors">
+                    {p.title}
+                  </h3>
+                  <p class="text-base-content/70 text-sm line-clamp-2">
+                    {p.description}
+                  </p>
+                </div>
+              </a>
+            ))}
+          </div>
+        </section>
+      )
+    }
+  </article>
 </Layout>
