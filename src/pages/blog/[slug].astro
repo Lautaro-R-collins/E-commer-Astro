@@ -1,0 +1,18 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+export function getStaticPaths() {
+    return [
+        // { params: { slug: 'hello-world' } } // Example
+    ];
+}
+
+const { slug } = Astro.params;
+---
+
+<Layout>
+    <div class="max-w-7xl mx-auto px-4 py-16">
+        <h1 class="text-4xl font-bold">Blog Post: {slug}</h1>
+        <p class="mt-4">Content coming soon...</p>
+    </div>
+</Layout>
