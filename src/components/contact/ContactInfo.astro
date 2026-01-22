@@ -1,0 +1,44 @@
+---
+import { Icon } from "astro-icon/components";
+
+const contactDetails = [
+    {
+        icon: "lucide:map-pin",
+        title: "Visit Us",
+        lines: ["123 Tech Street"],
+    },
+    {
+        icon: "lucide:phone",
+        title: "Call Us",
+        lines: ["+1 (555) 123-4567"],
+    },
+    {
+        icon: "lucide:mail",
+        title: "Email Us",
+        lines: ["contact@e-commerce.com"],
+    },
+];
+---
+
+<div class="space-y-6 mb-10">
+    {
+        contactDetails.map((item) => (
+            <div class="flex items-start gap-4">
+                <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary shrink-0">
+                    <Icon name={item.icon} class="w-5 h-5" />
+                </div>
+                <div>
+                    <h3 class="font-bold text-lg">{item.title}</h3>
+                    <p class="text-base-content/70">
+                        {item.lines.map((line, index) => (
+                            <>
+                                {line}
+                                {index < item.lines.length - 1 && <br />}
+                            </>
+                        ))}
+                    </p>
+                </div>
+            </div>
+        ))
+    }
+</div>
