@@ -1,0 +1,166 @@
+---
+import { Icon } from "astro-icon/components";
+
+interface Props {
+    title: string;
+    price: number;
+    images: string[];
+    stock: number;
+    slug: string;
+}
+
+const { title, price, images, stock, slug } = Astro.props;
+---
+
+<div
+    class="card bg-base-100 shadow-sm hover:shadow-xl transition-shadow duration-300 group relative rounded-xl overflow-hidden border border-base-200"
+>
+    <!-- Action Buttons -->
+    <div
+        class="absolute top-3 right-3 z-20 flex flex-col gap-2 translate-x-12 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300 ease-in-out"
+    >
+        <button
+            class="btn btn-circle btn-sm bg-white hover:bg-primary hover:text-white border-none shadow-md"
+            aria-label="Add to Favorites"
+        >
+            <Icon name="lucide:heart" class="w-4 h-4" />
+        </button>
+        <button
+            class="btn btn-circle btn-sm bg-white hover:bg-primary hover:text-white border-none shadow-md"
+            aria-label="Add to Cart"
+        >
+            <Icon name="lucide:shopping-cart" class="w-4 h-4" />
+        </button>
+    </div>
+
+    <!-- Image Slider -->
+    <div
+        class="relative w-full aspect-[4/5] bg-gray-100 overflow-hidden group/slider"
+    >
+        <div class="swiper product-swiper w-full h-full">
+            <div class="swiper-wrapper">
+                {
+                    images.map((img) => (
+                        <div class="swiper-slide">
+                            <img
+                                src={img}
+                                alt={title}
+                                class="w-full h-full object-cover"
+                                loading="lazy"
+                            />
+                        </div>
+                    ))
+                }
+            </div>
+            <!-- Pagination dots -->
+            <div class="swiper-pagination"></div>
+        </div>
+
+        <!-- Navigation Arrows -->
+        <button
+            class="swiper-prev-btn absolute left-2 top-1/2 -translate-y-1/2 z-30 btn btn-circle btn-sm bg-white hover:bg-primary hover:text-white border-none shadow-md opacity-0 group-hover/slider:opacity-100 transition-all duration-300 -translate-x-4 group-hover/slider:translate-x-0"
+            aria-label="Previous Image"
+            onclick="event.preventDefault(); event.stopPropagation();"
+        >
+            <Icon name="lucide:chevron-left" class="w-4 h-4" />
+        </button>
+        <button
+            class="swiper-next-btn absolute right-2 top-1/2 -translate-y-1/2 z-30 btn btn-circle btn-sm bg-white hover:bg-primary hover:text-white border-none shadow-md opacity-0 group-hover/slider:opacity-100 transition-all duration-300 translate-x-4 group-hover/slider:translate-x-0"
+            aria-label="Next Image"
+            onclick="event.preventDefault(); event.stopPropagation();"
+        >
+            <Icon name="lucide:chevron-right" class="w-4 h-4" />
+        </button>
+
+        <!-- Link Overlay -->
+        <a
+            href={`/product/${slug}`}
+            class="absolute inset-0 z-10"
+            aria-label={`View ${title}`}></a>
+    </div>
+
+    <!-- Info -->
+    <div class="p-4">
+        <h3 class="font-bold text-lg mb-1 truncate" title={title}>
+            <a
+                href={`/product/${slug}`}
+                class="hover:text-primary transition-colors"
+            >
+                {title}
+            </a>
+        </h3>
+
+        <div class="flex items-center justify-between mt-2">
+            <span class="text-xl font-bold text-primary">
+                ${price.toLocaleString("en-US")}
+            </span>
+            <div class="flex items-center gap-1 text-xs font-medium">
+                {
+                    stock > 0 ? (
+                        <span class="text-success flex items-center gap-1">
+                            <span class="w-2 h-2 rounded-full bg-success" />
+                            In Stock
+                        </span>
+                    ) : (
+                        <span class="text-error flex items-center gap-1">
+                            <span class="w-2 h-2 rounded-full bg-error" />
+                            Out of Stock
+                        </span>
+                    )
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    import Swiper from "swiper";
+    import { Pagination, Navigation } from "swiper/modules";
+    import "swiper/css";
+    import "swiper/css/pagination";
+
+    function initProductSwipers() {
+        // We use a class for the selector, so it inits all of them
+        const containers = document.querySelectorAll(".group\\/slider");
+
+        containers.forEach((container) => {
+            const swiperEl = container.querySelector(".product-swiper");
+            if (!swiperEl || swiperEl.classList.contains("swiper-initialized"))
+                return;
+
+            const nextBtn = container.querySelector(".swiper-next-btn");
+            const prevBtn = container.querySelector(".swiper-prev-btn");
+
+            new Swiper(swiperEl as HTMLElement, {
+                modules: [Pagination, Navigation],
+                loop: true,
+                pagination: {
+                    el: swiperEl.querySelector(
+                        ".swiper-pagination",
+                    ) as HTMLElement,
+                    clickable: true,
+                },
+                navigation: {
+                    nextEl: nextBtn as HTMLElement,
+                    prevEl: prevBtn as HTMLElement,
+                },
+                nested: true,
+                resistanceRatio: 0,
+            });
+        });
+    }
+
+    // Init on load
+    initProductSwipers();
+
+    // Init on View Transitions navigation
+    document.addEventListener("astro:page-load", initProductSwipers);
+</script>
+
+<style>
+    :root {
+        --swiper-pagination-color: var(--color-primary);
+        --swiper-pagination-bullet-size: 6px;
+        --swiper-pagination-bullet-inactive-color: #999;
+    }
+</style>
