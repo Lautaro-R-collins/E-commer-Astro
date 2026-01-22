@@ -12,7 +12,7 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props;
 
-// Filtrar artículos relacionados
+// Filter related articles
 const relatedPosts = blogPosts.filter((p) => p.slug !== post.slug).slice(0, 2);
 ---
 
@@ -101,16 +101,16 @@ const relatedPosts = blogPosts.filter((p) => p.slug !== post.slug).slice(0, 2);
             stroke-width="2"
             d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
         </svg>
-        Volver al Blog
+        Back to Blog
       </a>
     </div>
 
-    <!-- Artículos relacionados -->
+    <!-- Related Articles -->
     {
       relatedPosts.length > 0 && (
         <section class="mt-20">
           <h2 class="text-3xl font-bold text-base-content mb-8 border-l-4 border-primary pl-4">
-            Artículos Relacionados
+            Related Articles
           </h2>
 
           <div class="grid gap-8 md:grid-cols-2">
