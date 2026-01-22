@@ -1,0 +1,29 @@
+---
+const { currentPage, totalPages, baseUrl } = Astro.props;
+
+const prevUrl = currentPage > 1 ? `${baseUrl}?page=${currentPage - 1}` : null;
+const nextUrl =
+    currentPage < totalPages ? `${baseUrl}?page=${currentPage + 1}` : null;
+
+// Helper to generate page numbers
+const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+---
+
+{
+    totalPages > 1 && (
+        <div class="join grid grid-cols-2 w-full max-w-xs mx-auto mt-12 bg-base-100">
+            <a
+                href={prevUrl || "#"}
+                class={`join-item btn btn-outline ${!prevUrl ? "btn-disabled" : ""}`}
+            >
+                Previous
+            </a>
+            <a
+                href={nextUrl || "#"}
+                class={`join-item btn btn-outline ${!nextUrl ? "btn-disabled" : ""}`}
+            >
+                Next
+            </a>
+        </div>
+    )
+}
