@@ -41,7 +41,7 @@ export function addToCart(product: Omit<CartItem, 'quantity'>, qty: number = 1) 
 
         // Stock limit check
         if (product.stock !== undefined && newQuantity > product.stock) {
-            return { success: false, message: `Solo hay ${product.stock} unidades disponibles` };
+            return { success: false, message: `Only ${product.stock} units available` };
         }
 
         cartItems.set(
@@ -55,13 +55,13 @@ export function addToCart(product: Omit<CartItem, 'quantity'>, qty: number = 1) 
         if (qty > 0) {
             // Stock limit check for new item
             if (product.stock !== undefined && qty > product.stock) {
-                return { success: false, message: `Solo hay ${product.stock} unidades disponibles` };
+                return { success: false, message: `Only ${product.stock} units available` };
             }
             cartItems.set([...items, { ...product, quantity: qty }]);
         }
     }
     // Removed openCart() as requested by user
-    return { success: true, message: `${product.name} añadido al carrito` };
+    return { success: true, message: `${product.name} added to cart` };
 }
 
 export function removeFromCart(productId: string) {
@@ -73,7 +73,7 @@ export function updateQuantity(productId: string, qty: number) {
     const item = items.find(i => i.id === productId);
 
     if (item && item.stock !== undefined && qty > item.stock) {
-        return { success: false, message: `Solo hay ${item.stock} unidades disponibles` };
+        return { success: false, message: `Only ${item.stock} units available` };
     }
 
     cartItems.set(
