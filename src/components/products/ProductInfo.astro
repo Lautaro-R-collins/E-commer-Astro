@@ -9,6 +9,8 @@ interface Product {
     stock: number;
     badge?: string;
     discount?: number;
+    image?: string;
+    images?: string[];
     specs?: { label: string; value: string }[];
 }
 
@@ -191,6 +193,7 @@ const discountedPrice = product.price * (1 - (product.discount || 0) / 100);
 
 <script>
     import { addToCart } from "../../store/cartStore";
+    import { toast } from "sonner";
 
     function setupPurchaseActions() {
         const productInfo = document.querySelector(".product-info");
@@ -231,12 +234,21 @@ const discountedPrice = product.price * (1 - (product.discount || 0) / 100);
         });
 
         addToCartBtn?.addEventListener("click", () => {
-            addToCart(product, quantity);
+            const result = addToCart(product, quantity);
+            if (result.success) {
+                toast.success(result.message);
+            } else {
+                toast.error(result.message);
+            }
         });
 
         buyNowBtn?.addEventListener("click", () => {
-            addToCart(product, quantity);
-            window.location.href = "/checkout";
+            const result = addToCart(product, quantity);
+            if (result.success) {
+                window.location.href = "/checkout";
+            } else {
+                toast.error(result.message);
+            }
         });
 
         updateUI();
