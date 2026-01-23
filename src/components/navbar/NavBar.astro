@@ -95,19 +95,19 @@ import Links from "./Links.astro";
 
         const currentScrollY = window.scrollY;
 
-        // Si estamos arriba del todo, siempre mostrar
+        // If we are at the top, always show
         if (currentScrollY <= 0) {
             navbar.classList.remove("navbar-hidden");
             lastScrollY = currentScrollY;
             return;
         }
 
-        // Detectar dirección del scroll
+        // Detect scroll direction
         if (currentScrollY > lastScrollY) {
-            // Scroll hacia abajo -> Ocultar
+            // Scroll down -> Hide
             navbar.classList.add("navbar-hidden");
         } else {
-            // Scroll hacia arriba -> Mostrar
+            // Scroll up -> Show
             navbar.classList.remove("navbar-hidden");
         }
 

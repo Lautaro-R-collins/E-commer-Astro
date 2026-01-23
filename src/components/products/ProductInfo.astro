@@ -70,18 +70,18 @@ const discountedPrice = product.price * (1 - (product.discount || 0) / 100);
                 {
                     product.discount && product.discount > 0 && (
                         <span class="badge bg-red-50 text-red-600 border-none font-black px-3 py-1 text-[10px] uppercase tracking-widest">
-                            ¡Ahorra {product.discount}%!
+                            Save {product.discount}%!
                         </span>
                     )
                 }
                 {
                     product.stock > 0 ? (
                         <span class="badge bg-emerald-50 text-emerald-600 border-none font-bold p-3">
-                            En Stock ({product.stock})
+                            In Stock ({product.stock})
                         </span>
                     ) : (
                         <span class="badge bg-red-50 text-red-600 border-none font-bold p-3">
-                            Sin Stock
+                            Out of Stock
                         </span>
                     )
                 }
@@ -94,12 +94,12 @@ const discountedPrice = product.price * (1 - (product.discount || 0) / 100);
         <h3
             class="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400"
         >
-            Descripción
+            Description
         </h3>
         <p class="text-slate-600 font-medium leading-relaxed text-lg">
             {
                 product.description ||
-                    "No hay descripción disponible para este producto en este momento."
+                    "No description available for this product at this time."
             }
         </p>
     </div>
@@ -157,7 +157,7 @@ const discountedPrice = product.price * (1 - (product.discount || 0) / 100);
                 disabled={product.stock <= 0}
             >
                 <Icon name="lucide:shopping-bag" class="w-5 h-5" />
-                Añadir al Carrito
+                Add to Cart
             </button>
 
             <!-- Buy Now -->
@@ -167,7 +167,7 @@ const discountedPrice = product.price * (1 - (product.discount || 0) / 100);
                 disabled={product.stock <= 0}
             >
                 <Icon name="lucide:credit-card" class="w-5 h-5" />
-                Comprar Ahora
+                Buy Now
             </button>
         </div>
     </div>
@@ -179,13 +179,13 @@ const discountedPrice = product.price * (1 - (product.discount || 0) / 100);
         <div class="flex items-center gap-3 text-slate-500">
             <Icon name="lucide:shield-check" class="w-5 h-5 text-emerald-500" />
             <span class="text-[10px] uppercase font-bold tracking-widest"
-                >Garantía Certificada</span
+                >Certified Warranty</span
             >
         </div>
         <div class="flex items-center gap-3 text-slate-500">
             <Icon name="lucide:truck" class="w-5 h-5 text-amber-500" />
             <span class="text-[10px] uppercase font-bold tracking-widest"
-                >Envío Asegurado 24/48h</span
+                >Insured Shipping 24/48h</span
             >
         </div>
     </div>
