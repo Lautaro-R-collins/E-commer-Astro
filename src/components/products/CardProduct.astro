@@ -126,6 +126,7 @@ const { title, price, images, stock, slug } = Astro.props;
     import "swiper/css";
     import "swiper/css/pagination";
     import { addToCart } from "../../store/cartStore";
+    import { toast } from "sonner";
 
     function initProductComponents() {
         // Swipers setup
@@ -167,7 +168,12 @@ const { title, price, images, stock, slug } = Astro.props;
                 const product = JSON.parse(
                     btn.getAttribute("data-product") || "{}",
                 );
-                addToCart(product, 1);
+                const result = addToCart(product, 1);
+                if (result.success) {
+                    toast.success(result.message);
+                } else {
+                    toast.error(result.message);
+                }
             });
             btn.setAttribute("data-listener", "true");
         });
