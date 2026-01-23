@@ -1,0 +1,97 @@
+---
+interface Props {
+    images: string[];
+}
+
+const { images } = Astro.props;
+const mainImage =
+    images[0] ||
+    "https://images.unsplash.com/photo-1550985616-10810253b84d?q=80&w=2000&auto=format&fit=crop";
+---
+
+<div class="product-gallery space-y-6">
+    <!-- Main Image -->
+    <div
+        class="aspect-4/5 md:aspect-square bg-slate-100 rounded-3xl overflow-hidden relative group border border-slate-200 shadow-inner"
+    >
+        <img
+            id="main-product-image"
+            src={mainImage}
+            alt="Product View"
+            class="w-full h-full object-cover transition-all duration-700 group-hover:scale-105"
+        />
+    </div>
+
+    <!-- Thumbnails -->
+    <div class="grid grid-cols-4 gap-4">
+        {
+            images.map((img, index) => (
+                <button
+                    class="cursor-pointer thumbnail-btn aspect-square rounded-2xl overflow-hidden border-2 transition-all p-1 bg-slate-50 border-slate-100"
+                    data-image={img}
+                >
+                    <img
+                        src={img}
+                        class="w-full h-full object-cover rounded-xl"
+                        alt={`Thumbnail ${index + 1}`}
+                    />
+                </button>
+            ))
+        }
+    </div>
+</div>
+
+<script>
+    function setupGallery() {
+        const mainImage = document.getElementById(
+            "main-product-image",
+        ) as HTMLImageElement;
+        const thumbnailBtns = document.querySelectorAll(".thumbnail-btn");
+
+        thumbnailBtns.forEach((btn) => {
+            btn.addEventListener("click", () => {
+                const newSrc = btn.getAttribute("data-image");
+                if (newSrc && mainImage) {
+                    mainImage.src = newSrc;
+
+                    // Update active state
+                    thumbnailBtns.forEach((b) => {
+                        b.classList.remove(
+                            "border-primary",
+                            "bg-white",
+                            "ring-4",
+                            "ring-primary/10",
+                        );
+                        b.classList.add("border-slate-100", "bg-slate-50");
+                    });
+
+                    btn.classList.add(
+                        "border-primary",
+                        "bg-white",
+                        "ring-4",
+                        "ring-primary/10",
+                    );
+                    btn.classList.remove("border-slate-100", "bg-slate-50");
+                }
+            });
+        });
+
+        // Mark first thumbnail as active initially
+        if (thumbnailBtns[0]) {
+            thumbnailBtns[0].classList.add(
+                "border-primary",
+                "bg-white",
+                "ring-4",
+                "ring-primary/10",
+            );
+            thumbnailBtns[0].classList.remove(
+                "border-slate-100",
+                "bg-slate-50",
+            );
+        }
+    }
+
+    // Initialize on page load and on view transitions
+    setupGallery();
+    document.addEventListener("astro:page-load", setupGallery);
+</script>
