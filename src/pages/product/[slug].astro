@@ -1,0 +1,94 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Breadcrumbs from "../../components/ui/Breadcrumbs.astro";
+import ProductGallery from "../../components/products/ProductGallery.astro";
+import ProductInfo from "../../components/products/ProductInfo.astro";
+import CardProduct from "../../components/products/CardProduct.astro";
+import { products, getRelatedProducts } from "../../data/products";
+
+export async function getStaticPaths() {
+    return products.map((product) => ({
+        params: { slug: product.slug },
+        props: { product },
+    }));
+}
+
+const { product } = Astro.props;
+const relatedProducts = getRelatedProducts(product.category, product.slug);
+
+const breadcrumbItems = [
+    { label: "Inicio", href: "/" },
+    {
+        label: product.category,
+        href: `/category/${product.category.toLowerCase()}`,
+    },
+    { label: product.name },
+];
+---
+
+<Layout title={`${product.name} | E-COMMER`}>
+    <div class="bg-white min-h-screen pb-20 pt-10">
+        <div class="max-w-7xl mx-auto px-6">
+            <Breadcrumbs items={breadcrumbItems} />
+        </div>
+
+        <main class="max-w-7xl mx-auto px-6 py-12 md:py-20">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 xl:gap-24">
+                <!-- Gallery Section -->
+                <ProductGallery images={product.images} />
+
+                <!-- Info Section -->
+                <ProductInfo product={product} />
+            </div>
+
+            <!-- Related Products Section -->
+            <section class="mt-32">
+                <div
+                    class="flex items-center justify-between mb-12 border-b border-slate-100 pb-8"
+                >
+                    <h2
+                        class="text-3xl font-black text-slate-950 uppercase italic tracking-tighter"
+                    >
+                        También te puede <span class="text-primary"
+                            >interesar</span
+                        >
+                    </h2>
+                </div>
+
+                <div
+                    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"
+                >
+                    {
+                        relatedProducts.map((relProduct) => (
+                            <CardProduct
+                                title={relProduct.name}
+                                price={relProduct.price}
+                                images={relProduct.images}
+                                stock={relProduct.stock}
+                                slug={relProduct.slug}
+                            />
+                        ))
+                    }
+                </div>
+            </section>
+        </main>
+    </div>
+</Layout>
+
+<style>
+    /* Add some premium spacing and transitions */
+    main {
+        animation: fadeIn 0.8s ease-out;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
