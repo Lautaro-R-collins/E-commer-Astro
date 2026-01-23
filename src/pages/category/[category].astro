@@ -1,0 +1,84 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import CategoriesHeader from "../../components/categories/CategoriesHeader.astro";
+import Breadcrumbs from "../../components/ui/Breadcrumbs.astro";
+import CardProduct from "../../components/products/CardProduct.astro";
+import { products } from "../../data/products";
+import { categories } from "../../data/home";
+
+export async function getStaticPaths() {
+    // Get unique categories from products
+    const uniqueCategories = [...new Set(products.map((p) => p.category))];
+
+    return uniqueCategories.map((category) => {
+        const categoryData = categories.find(
+            (c) => c.name.toLowerCase() === category.toLowerCase(),
+        );
+        const categorySlug = category.toLowerCase();
+        return {
+            params: { category: categorySlug },
+            props: {
+                categoryName: category,
+                categoryProducts: products.filter(
+                    (p) => p.category === category,
+                ),
+                image: categoryData?.image,
+            },
+        };
+    });
+}
+
+const { categoryName, categoryProducts, image } = Astro.props;
+
+const breadcrumbItems = [{ label: "Home", href: "/" }, { label: categoryName }];
+---
+
+<Layout title={`${categoryName} | E-COMMER`}>
+    <CategoriesHeader title={categoryName} image={image} />
+
+    <div class="bg-white min-h-screen pb-20 pt-10">
+        <div class="max-w-7xl mx-auto px-6">
+            <Breadcrumbs items={breadcrumbItems} />
+
+            <main class="py-12">
+                {
+                    categoryProducts.length > 0 ? (
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 animate-fade-in">
+                            {categoryProducts.map((product) => (
+                                <CardProduct
+                                    title={product.name}
+                                    price={product.price}
+                                    images={product.images}
+                                    stock={product.stock}
+                                    slug={product.slug}
+                                />
+                            ))}
+                        </div>
+                    ) : (
+                        <div class="text-center py-24 bg-slate-50 rounded-3xl border-2 border-dashed border-slate-200">
+                            <p class="text-slate-400 font-bold uppercase tracking-widest">
+                                No products found in this category
+                            </p>
+                        </div>
+                    )
+                }
+            </main>
+        </div>
+    </div>
+</Layout>
+
+<style>
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    .animate-fade-in {
+        animation: fadeIn 0.6s ease-out forwards;
+    }
+</style>
