@@ -26,7 +26,7 @@ import { Icon } from "astro-icon/components";
                     <Icon name="lucide:shopping-bag" class="w-5 h-5" />
                     <span
                         id="cart-count-badge"
-                        class="hidden absolute -top-2 -right-2 bg-amber-500 text-slate-950 font-black text-[10px] w-6 h-6 flex items-center justify-center rounded-full border-2 border-white"
+                        class="hidden absolute -top-2 -right-2 bg-secondary text-white font-black text-[10px] w-6 h-6 flex items-center justify-center rounded-full border-2 border-white"
                     >
                         0
                     </span>
@@ -77,7 +77,7 @@ import { Icon } from "astro-icon/components";
                     id="go-to-catalog"
                     class="bg-primary text-white rounded-2xl py-5 px-10 font-black uppercase tracking-widest text-xs hover:bg-primary/80 transition-all cursor-pointer"
                 >
-                    Ir al catálogo
+                    Volver a la tienda
                 </button>
             </div>
 
@@ -175,6 +175,7 @@ import { Icon } from "astro-icon/components";
         totalSavings,
         totalItems,
     } from "../../store/cartStore";
+    import { toast } from "sonner";
 
     const overlay = document.getElementById("cart-overlay");
     const drawer = document.getElementById("cart-drawer");
@@ -258,7 +259,7 @@ import { Icon } from "astro-icon/components";
                                     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>
                                 </button>
                                 <span class="w-8 text-center text-xs font-black italic">${item.quantity}</span>
-                                <button class="increase-qty w-8 h-8 flex items-center justify-center rounded-lg hover:bg-white transition-all text-slate-400 hover:text-slate-950 disabled:opacity-30 cursor-pointer" data-id="${item.id}">
+                                <button class="increase-qty w-8 h-8 flex items-center justify-center rounded-lg hover:bg-white transition-all text-slate-400 hover:text-slate-950 disabled:opacity-30 cursor-pointer" data-id="${item.id}" ${item.stock !== undefined && item.quantity >= item.stock ? "disabled" : ""}>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
                                 </button>
                             </div>
@@ -292,7 +293,12 @@ import { Icon } from "astro-icon/components";
                 btn.addEventListener("click", () => {
                     const id = btn.getAttribute("data-id") || "";
                     const item = items.find((i) => i.id === id);
-                    if (item) updateQuantity(id, item.quantity + 1);
+                    if (item) {
+                        const result = updateQuantity(id, item.quantity + 1);
+                        if (!result.success) {
+                            toast.error(result.message);
+                        }
+                    }
                 });
             });
         }
