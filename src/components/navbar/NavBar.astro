@@ -1,6 +1,7 @@
 ---
 import { Icon } from "astro-icon/components";
 import Links from "./Links.astro";
+import CartDrawer from "../cart/CartDrawer.astro";
 ---
 
 <div
@@ -44,6 +45,7 @@ import Links from "./Links.astro";
                 />
             </button>
             <button
+                id="cart-button"
                 class="btn btn-ghost btn-circle hover:bg-primary/10 transition-colors"
                 aria-label="Shopping Cart"
             >
@@ -53,7 +55,8 @@ import Links from "./Links.astro";
                         class="w-6 h-6 hover:text-primary transition-colors"
                     />
                     <span
-                        class="badge badge-sm badge-primary indicator-item border-none"
+                        id="nav-cart-count"
+                        class="badge badge-sm badge-primary indicator-item border-none hidden"
                         >0</span
                     >
                 </div>
@@ -61,11 +64,33 @@ import Links from "./Links.astro";
         </div>
     </nav>
     <Links />
+    <CartDrawer />
 </div>
 
 <script>
+    import { toggleCart, totalItems } from "../../store/cartStore";
+
     let lastScrollY = window.scrollY;
     const navbar = document.getElementById("main-navbar");
+    const cartBtn = document.getElementById("cart-button");
+    const navCartCount = document.getElementById("nav-cart-count");
+
+    // Handle cart toggle
+    cartBtn?.addEventListener("click", (e) => {
+        e.preventDefault();
+        toggleCart();
+    });
+
+    // Update cart count in navbar
+    totalItems.subscribe((count) => {
+        if (!navCartCount) return;
+        if (count > 0) {
+            navCartCount.classList.remove("hidden");
+            navCartCount.textContent = String(count);
+        } else {
+            navCartCount.classList.add("hidden");
+        }
+    });
 
     window.addEventListener("scroll", () => {
         if (!navbar) return;
