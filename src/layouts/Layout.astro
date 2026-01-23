@@ -3,6 +3,8 @@ import "../styles/global.css";
 import Navbar from "../components/navbar/NavBar.astro";
 import AnnouncementBar from "../components/ui/AnnouncementBar.astro";
 import Footer from "../components/footer/Footer.astro";
+import ToasterComponent from "../components/ui/ToasterComponent";
+import CartDrawer from "../components/cart/CartDrawer.astro";
 ---
 
 <!doctype html>
@@ -21,6 +23,8 @@ import Footer from "../components/footer/Footer.astro";
 			<slot />
 		</main>
 		<Footer />
+		<CartDrawer />
+		<ToasterComponent client:load />
 	</body>
 </html>
 
