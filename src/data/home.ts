@@ -1,26 +1,22 @@
 export const categories = [
     {
         name: "Computers",
-        image:
-            "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=500&q=80",
+        image: "https://images.unsplash.com/photo-1547082299-de196ea013d6?q=80&w=2000&auto=format&fit=crop",
         path: "/category/computers",
     },
     {
         name: "Phones",
-        image:
-            "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=500&q=80",
+        image: "https://images.unsplash.com/photo-1556656793-062ff98782a1?q=80&w=2000&auto=format&fit=crop",
         path: "/category/phones",
     },
     {
         name: "Audio",
-        image:
-            "https://images.unsplash.com/photo-1558403194-611308249627?auto=format&fit=crop&w=500&q=80",
+        image: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?q=80&w=2000&auto=format&fit=crop",
         path: "/category/audio",
     },
     {
         name: "Accessories",
-        image:
-            "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?auto=format&fit=crop&w=500&q=80",
+        image: "https://images.unsplash.com/photo-1615814141018-c2b6067bd6eb?q=80&w=2000&auto=format&fit=crop",
         path: "/category/accessories",
     },
 ];
@@ -86,4 +82,3 @@ export const featuredProducts = [
         slug: "logitech-mx-master-3s"
     }
 ];
-
