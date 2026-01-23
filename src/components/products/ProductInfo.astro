@@ -1,0 +1,235 @@
+---
+import { Icon } from "astro-icon/components";
+
+interface Product {
+    name: string;
+    price: number;
+    description: string;
+    category: string;
+    stock: number;
+    badge?: string;
+    discount?: number;
+    specs?: { label: string; value: string }[];
+}
+
+interface Props {
+    product: Product;
+}
+
+const { product } = Astro.props;
+
+const discountedPrice = product.price * (1 - (product.discount || 0) / 100);
+---
+
+<div class="product-info space-y-10">
+    <!-- Header Info -->
+    <div class="space-y-4">
+        <span
+            class="text-primary font-black uppercase text-xs tracking-[0.3em] italic"
+        >
+            {product.category}
+            {product.badge ? `/ ${product.badge}` : ""}
+        </span>
+        <h1
+            class="text-4xl md:text-5xl font-black text-slate-950 uppercase tracking-tighter leading-tight"
+        >
+            {product.name}
+        </h1>
+        <div class="flex items-center gap-4">
+            <div class="flex flex-col">
+                {
+                    product.discount && product.discount > 0 && (
+                        <span class="text-sm font-bold text-slate-400 line-through decoration-red-500/50">
+                            ${product.price.toLocaleString()}
+                        </span>
+                    )
+                }
+                <span class="text-4xl font-black text-slate-900">
+                    ${
+                        discountedPrice.toLocaleString(undefined, {
+                            minimumFractionDigits: 0,
+                            maximumFractionDigits: 0,
+                        })
+                    }
+                </span>
+            </div>
+            <div class="flex flex-col gap-2">
+                {
+                    product.discount && product.discount > 0 && (
+                        <span class="badge bg-red-50 text-red-600 border-none font-black px-3 py-1 text-[10px] uppercase tracking-widest">
+                            ¡Ahorra {product.discount}%!
+                        </span>
+                    )
+                }
+                {
+                    product.stock > 0 ? (
+                        <span class="badge bg-emerald-50 text-emerald-600 border-none font-bold p-3">
+                            En Stock ({product.stock})
+                        </span>
+                    ) : (
+                        <span class="badge bg-red-50 text-red-600 border-none font-bold p-3">
+                            Sin Stock
+                        </span>
+                    )
+                }
+            </div>
+        </div>
+    </div>
+
+    <!-- Description -->
+    <div class="space-y-4">
+        <h3
+            class="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400"
+        >
+            Descripción
+        </h3>
+        <p class="text-slate-600 font-medium leading-relaxed text-lg">
+            {
+                product.description ||
+                    "No hay descripción disponible para este producto en este momento."
+            }
+        </p>
+    </div>
+
+    <!-- Specs Grid -->
+    {
+        product.specs && (
+            <div class="grid grid-cols-2 gap-6 p-8 bg-slate-50 rounded-3xl border border-slate-100">
+                {product.specs.map((spec) => (
+                    <div class="space-y-1">
+                        <p class="text-[10px] font-black uppercase tracking-widest text-slate-400">
+                            {spec.label}
+                        </p>
+                        <p class="text-sm font-bold text-slate-900 uppercase italic">
+                            {spec.value}
+                        </p>
+                    </div>
+                ))}
+            </div>
+        )
+    }
+
+    <!-- Purchase Actions -->
+    <div class="space-y-6 pt-4">
+        <div class="grid grid-cols-1 sm:grid-cols-[auto_1fr] gap-4">
+            <!-- Quantity Selector -->
+            <div
+                class="flex items-center bg-slate-900 border-2 border-slate-100 rounded-2xl p-1 shadow-sm w-fit sm:w-auto"
+            >
+                <button
+                    id="decrement-qty"
+                    class="flex items-center justify-center p-4 hover:bg-slate-800 cursor-pointer rounded-xl transition-colors text-white disabled:opacity-30"
+                >
+                    <Icon name="lucide:minus" class="w-[18px] h-[18px]" />
+                </button>
+
+                <span
+                    id="quantity-display"
+                    class="w-12 text-center text-white font-black text-xl"
+                    >1</span
+                >
+
+                <button
+                    id="increment-qty"
+                    class="flex items-center justify-center p-4 hover:bg-slate-800 cursor-pointer rounded-xl transition-colors text-white disabled:opacity-30"
+                >
+                    <Icon name="lucide:plus" class="w-[18px] h-[18px]" />
+                </button>
+            </div>
+
+            <!-- Add to Cart -->
+            <button
+                id="add-to-cart-btn"
+                class="w-full bg-primary text-white rounded-2xl py-5 px-8 font-black uppercase tracking-widest text-sm flex items-center justify-center gap-4 hover:bg-primary/80 transition-all active:scale-[0.98] cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
+                disabled={product.stock <= 0}
+            >
+                <Icon name="lucide:shopping-bag" class="w-5 h-5" />
+                Añadir al Carrito
+            </button>
+
+            <!-- Buy Now -->
+            <button
+                id="buy-now-btn"
+                class="sm:col-span-2 w-full bg-primary text-white rounded-2xl py-5 font-black uppercase tracking-widest text-sm flex items-center justify-center gap-4 hover:bg-primary/80 transition-all active:scale-[0.98] cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
+                disabled={product.stock <= 0}
+            >
+                <Icon name="lucide:credit-card" class="w-5 h-5" />
+                Comprar Ahora
+            </button>
+        </div>
+    </div>
+
+    <!-- Trust Badges -->
+    <div
+        class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t border-slate-100"
+    >
+        <div class="flex items-center gap-3 text-slate-500">
+            <Icon name="lucide:shield-check" class="w-5 h-5 text-emerald-500" />
+            <span class="text-[10px] uppercase font-bold tracking-widest"
+                >Garantía Certificada</span
+            >
+        </div>
+        <div class="flex items-center gap-3 text-slate-500">
+            <Icon name="lucide:truck" class="w-5 h-5 text-amber-500" />
+            <span class="text-[10px] uppercase font-bold tracking-widest"
+                >Envío Asegurado 24/48h</span
+            >
+        </div>
+    </div>
+</div>
+
+<script define:vars={{ stock: product.stock }}>
+    function setupPurchaseActions() {
+        const decrementBtn = document.getElementById("decrement-qty");
+        const incrementBtn = document.getElementById("increment-qty");
+        const quantityDisplay = document.getElementById("quantity-display");
+        const addToCartBtn = document.getElementById("add-to-cart-btn");
+        const buyNowBtn = document.getElementById("buy-now-btn");
+
+        let quantity = 1;
+
+        const updateUI = () => {
+            if (quantityDisplay) quantityDisplay.textContent = quantity;
+            if (decrementBtn)
+                (decrementBtn as HTMLButtonElement).disabled = quantity <= 1;
+            if (incrementBtn)
+                (incrementBtn as HTMLButtonElement).disabled =
+                    quantity >= stock;
+        };
+
+        decrementBtn?.addEventListener("click", () => {
+            if (quantity > 1) {
+                quantity--;
+                updateUI();
+            }
+        });
+
+        incrementBtn?.addEventListener("click", () => {
+            if (quantity < stock) {
+                quantity++;
+                updateUI();
+            }
+        });
+
+        addToCartBtn?.addEventListener("click", () => {
+            console.log(`Added ${quantity} units to cart`);
+            // Here you would call your cart store or event
+            // Dispatch a custom event to communicate with the cart
+            window.dispatchEvent(
+                new CustomEvent("cart:add", {
+                    detail: { productId: "...", quantity },
+                }),
+            );
+        });
+
+        buyNowBtn?.addEventListener("click", () => {
+            console.log(`Buying ${quantity} units now`);
+            // Redirect to checkout
+        });
+
+        updateUI();
+    }
+
+    setupPurchaseActions();
+    document.addEventListener("astro:page-load", setupPurchaseActions);
+</script>
