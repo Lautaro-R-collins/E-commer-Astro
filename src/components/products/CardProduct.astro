@@ -26,15 +26,24 @@ const { title, price, images, stock, slug } = Astro.props;
             <Icon name="lucide:heart" class="w-4 h-4" />
         </button>
         <button
-            class="btn btn-circle btn-sm bg-white hover:bg-primary hover:text-white border-none shadow-md"
+            class="add-to-cart-btn btn btn-circle btn-sm bg-white hover:bg-primary hover:text-white border-none shadow-md"
             aria-label="Add to Cart"
+            data-product={JSON.stringify({
+                id: slug,
+                name: title,
+                price: price,
+                image: images[0] || "",
+                stock: stock,
+            })}
         >
             <Icon name="lucide:shopping-cart" class="w-4 h-4" />
         </button>
     </div>
 
     <!-- Image Slider -->
-    <div class="relative w-full aspect-4/5 bg-gray-100 overflow-hidden group/slider">
+    <div
+        class="relative w-full aspect-4/5 bg-gray-100 overflow-hidden group/slider"
+    >
         <div class="swiper product-swiper w-full h-full">
             <div class="swiper-wrapper">
                 {
@@ -116,11 +125,11 @@ const { title, price, images, stock, slug } = Astro.props;
     import { Pagination, Navigation } from "swiper/modules";
     import "swiper/css";
     import "swiper/css/pagination";
+    import { addToCart } from "../../store/cartStore";
 
-    function initProductSwipers() {
-        // We use a class for the selector, so it inits all of them
+    function initProductComponents() {
+        // Swipers setup
         const containers = document.querySelectorAll(".group\\/slider");
-
         containers.forEach((container) => {
             const swiperEl = container.querySelector(".product-swiper");
             if (!swiperEl || swiperEl.classList.contains("swiper-initialized"))
@@ -146,13 +155,29 @@ const { title, price, images, stock, slug } = Astro.props;
                 resistanceRatio: 0,
             });
         });
+
+        // Add to cart buttons setup
+        const cartButtons = document.querySelectorAll(".add-to-cart-btn");
+        cartButtons.forEach((btn) => {
+            if (btn.getAttribute("data-listener")) return;
+
+            btn.addEventListener("click", (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                const product = JSON.parse(
+                    btn.getAttribute("data-product") || "{}",
+                );
+                addToCart(product, 1);
+            });
+            btn.setAttribute("data-listener", "true");
+        });
     }
 
     // Init on load
-    initProductSwipers();
+    initProductComponents();
 
     // Init on View Transitions navigation
-    document.addEventListener("astro:page-load", initProductSwipers);
+    document.addEventListener("astro:page-load", initProductComponents);
 </script>
 
 <style>
