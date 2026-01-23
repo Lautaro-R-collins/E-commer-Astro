@@ -21,7 +21,18 @@ const { product } = Astro.props;
 const discountedPrice = product.price * (1 - (product.discount || 0) / 100);
 ---
 
-<div class="product-info space-y-10">
+<div
+    class="product-info space-y-10"
+    data-product={JSON.stringify({
+        id: product.name.toLowerCase().replace(/\s+/g, "-"), // fallback
+        name: product.name,
+        price: product.price,
+        image: product.image || (product as any).images?.[0] || "",
+        category: product.category,
+        discount: product.discount,
+        stock: product.stock,
+    })}
+>
     <!-- Header Info -->
     <div class="space-y-4">
         <span
@@ -178,10 +189,16 @@ const discountedPrice = product.price * (1 - (product.discount || 0) / 100);
     </div>
 </div>
 
-<script define:vars={{ product, discountedPrice }}>
+<script>
     import { addToCart } from "../../store/cartStore";
 
     function setupPurchaseActions() {
+        const productInfo = document.querySelector(".product-info");
+        if (!productInfo) return;
+
+        const product = JSON.parse(
+            productInfo.getAttribute("data-product") || "{}",
+        );
         const decrementBtn = document.getElementById("decrement-qty");
         const incrementBtn = document.getElementById("increment-qty");
         const quantityDisplay = document.getElementById("quantity-display");
@@ -214,47 +231,11 @@ const discountedPrice = product.price * (1 - (product.discount || 0) / 100);
         });
 
         addToCartBtn?.addEventListener("click", () => {
-            addToCart(
-                {
-                    id:
-                        product.id ||
-                        product._id ||
-                        product.slug ||
-                        Math.random().toString(),
-                    name: product.name,
-                    price: product.price,
-                    image:
-                        product.image ||
-                        (product.images && product.images[0]) ||
-                        "",
-                    category: product.category,
-                    discount: product.discount,
-                    stock: product.stock,
-                },
-                quantity,
-            );
+            addToCart(product, quantity);
         });
 
         buyNowBtn?.addEventListener("click", () => {
-            addToCart(
-                {
-                    id:
-                        product.id ||
-                        product._id ||
-                        product.slug ||
-                        Math.random().toString(),
-                    name: product.name,
-                    price: product.price,
-                    image:
-                        product.image ||
-                        (product.images && product.images[0]) ||
-                        "",
-                    category: product.category,
-                    discount: product.discount,
-                    stock: product.stock,
-                },
-                quantity,
-            );
+            addToCart(product, quantity);
             window.location.href = "/checkout";
         });
 
