@@ -17,7 +17,7 @@ const { product } = Astro.props;
 const relatedProducts = getRelatedProducts(product.category, product.slug);
 
 const breadcrumbItems = [
-    { label: "Inicio", href: "/" },
+    { label: "Home", href: "/" },
     {
         label: product.category,
         href: `/category/${product.category.toLowerCase()}`,
@@ -49,9 +49,7 @@ const breadcrumbItems = [
                     <h2
                         class="text-3xl font-black text-slate-950 uppercase italic tracking-tighter"
                     >
-                        También te puede <span class="text-primary"
-                            >interesar</span
-                        >
+                        You may also <span class="text-primary">like</span>
                     </h2>
                 </div>
 
