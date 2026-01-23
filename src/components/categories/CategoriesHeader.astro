@@ -1,0 +1,82 @@
+---
+interface Props {
+    title: string;
+    image?: string;
+}
+
+const { title, image } = Astro.props;
+---
+
+<section class="relative py-24 md:py-32 overflow-hidden bg-slate-900">
+    <!-- Background Image & Overlays -->
+    <div class="absolute inset-0">
+        <!-- Main Background Image -->
+        {
+            image && (
+                <img
+                    src={image}
+                    alt={title}
+                    class="absolute inset-0 w-full h-full object-cover"
+                />
+            )
+        }
+
+        <!-- Dark Overlay to ensure text readability -->
+        <div
+            class="absolute inset-0 bg-slate-950/60 transition-opacity duration-700"
+        >
+        </div>
+
+        <!-- Pattern Overlay -->
+        <div
+            class="absolute inset-0 opacity-20"
+            style="background-image: radial-gradient(circle at 2px 2px, rgba(234, 179, 8, 0.4) 1px, transparent 0); background-size: 32px 32px;"
+        >
+        </div>
+
+        <!-- Gradient Vignette -->
+        <div
+            class="absolute inset-0 bg-linear-to-b from-transparent via-slate-950/40 to-slate-950"
+        >
+        </div>
+    </div>
+
+    <!-- Content -->
+    <div class="relative max-w-7xl mx-auto px-6 text-center">
+        <div class="space-y-4">
+            <span
+                class="text-primary font-black uppercase text-xs tracking-[0.5em] animate-fade-in-up"
+            >
+                Category Selection
+            </span>
+            <h1
+                class="text-5xl md:text-7xl font-black text-white uppercase italic tracking-tighter animate-fade-in-up"
+                style="animation-delay: 100ms;"
+            >
+                {title}
+            </h1>
+            <div
+                class="w-16 h-1.5 bg-primary mx-auto rounded-full animate-fade-in-up"
+                style="animation-delay: 200ms;"
+            >
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .animate-fade-in-up {
+        animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+</style>
