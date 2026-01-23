@@ -178,7 +178,9 @@ const discountedPrice = product.price * (1 - (product.discount || 0) / 100);
     </div>
 </div>
 
-<script define:vars={{ stock: product.stock }}>
+<script define:vars={{ product, discountedPrice }}>
+    import { addToCart } from "../../store/cartStore";
+
     function setupPurchaseActions() {
         const decrementBtn = document.getElementById("decrement-qty");
         const incrementBtn = document.getElementById("increment-qty");
@@ -189,12 +191,12 @@ const discountedPrice = product.price * (1 - (product.discount || 0) / 100);
         let quantity = 1;
 
         const updateUI = () => {
-            if (quantityDisplay) quantityDisplay.textContent = quantity;
+            if (quantityDisplay) quantityDisplay.textContent = String(quantity);
             if (decrementBtn)
                 (decrementBtn as HTMLButtonElement).disabled = quantity <= 1;
             if (incrementBtn)
                 (incrementBtn as HTMLButtonElement).disabled =
-                    quantity >= stock;
+                    quantity >= product.stock;
         };
 
         decrementBtn?.addEventListener("click", () => {
@@ -205,26 +207,55 @@ const discountedPrice = product.price * (1 - (product.discount || 0) / 100);
         });
 
         incrementBtn?.addEventListener("click", () => {
-            if (quantity < stock) {
+            if (quantity < product.stock) {
                 quantity++;
                 updateUI();
             }
         });
 
         addToCartBtn?.addEventListener("click", () => {
-            console.log(`Added ${quantity} units to cart`);
-            // Here you would call your cart store or event
-            // Dispatch a custom event to communicate with the cart
-            window.dispatchEvent(
-                new CustomEvent("cart:add", {
-                    detail: { productId: "...", quantity },
-                }),
+            addToCart(
+                {
+                    id:
+                        product.id ||
+                        product._id ||
+                        product.slug ||
+                        Math.random().toString(),
+                    name: product.name,
+                    price: product.price,
+                    image:
+                        product.image ||
+                        (product.images && product.images[0]) ||
+                        "",
+                    category: product.category,
+                    discount: product.discount,
+                    stock: product.stock,
+                },
+                quantity,
             );
         });
 
         buyNowBtn?.addEventListener("click", () => {
-            console.log(`Buying ${quantity} units now`);
-            // Redirect to checkout
+            addToCart(
+                {
+                    id:
+                        product.id ||
+                        product._id ||
+                        product.slug ||
+                        Math.random().toString(),
+                    name: product.name,
+                    price: product.price,
+                    image:
+                        product.image ||
+                        (product.images && product.images[0]) ||
+                        "",
+                    category: product.category,
+                    discount: product.discount,
+                    stock: product.stock,
+                },
+                quantity,
+            );
+            window.location.href = "/checkout";
         });
 
         updateUI();
