@@ -1,0 +1,136 @@
+---
+import { Icon } from "astro-icon/components";
+---
+
+<div
+    class="bg-white rounded-3xl p-8 shadow-xs border border-slate-100 h-fit sticky top-24"
+>
+    <div class="flex items-center gap-3 mb-8">
+        <div
+            class="w-10 h-10 bg-slate-900 rounded-xl flex items-center justify-center text-white"
+        >
+            <Icon name="lucide:shopping-cart" class="w-5 h-5" />
+        </div>
+        <h2
+            class="text-xl font-black text-slate-950 uppercase italic tracking-tighter"
+        >
+            Order Summary
+        </h2>
+    </div>
+
+    <div
+        id="checkout-items"
+        class="space-y-6 max-h-[400px] overflow-y-auto mb-8 pr-2 custom-scrollbar"
+    >
+        <!-- Items injected by client JS -->
+    </div>
+
+    <div class="space-y-4 pt-6 border-t border-slate-100">
+        <div
+            class="flex justify-between text-slate-500 font-bold text-xs uppercase tracking-widest"
+        >
+            <span>Subtotal</span>
+            <span id="checkout-subtotal">$ 0</span>
+        </div>
+        <div
+            class="flex justify-between text-slate-500 font-bold text-xs uppercase tracking-widest"
+        >
+            <span>Shipping</span>
+            <span class="text-emerald-500">Free</span>
+        </div>
+        <div
+            id="checkout-savings-container"
+            class="hidden flex justify-between text-emerald-600 font-black text-xs uppercase tracking-widest bg-emerald-50 p-2 rounded-lg"
+        >
+            <span>Total Savings</span>
+            <span id="checkout-savings">-$ 0</span>
+        </div>
+        <div
+            class="flex justify-between items-center pt-4 mt-2 border-t-2 border-slate-100 border-dashed"
+        >
+            <span
+                class="text-2xl font-black text-slate-950 uppercase italic tracking-tighter"
+                >Total</span
+            >
+            <span
+                id="checkout-total"
+                class="text-3xl font-black text-slate-950 italic">$ 0</span
+            >
+        </div>
+    </div>
+</div>
+
+<style>
+    .custom-scrollbar::-webkit-scrollbar {
+        width: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: #e2e8f0;
+        border-radius: 10px;
+    }
+</style>
+
+<script>
+    import { cartItems, totalPrice, totalSavings } from "../../store/cartStore";
+
+    const itemsContainer = document.getElementById("checkout-items");
+    const subtotalEl = document.getElementById("checkout-subtotal");
+    const totalEl = document.getElementById("checkout-total");
+    const savingsEl = document.getElementById("checkout-savings");
+    const savingsContainer = document.getElementById(
+        "checkout-savings-container",
+    );
+
+    const formatPrice = (price: number) =>
+        new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" })
+            .format(price)
+            .replace("$", "$ ");
+
+    cartItems.subscribe((items) => {
+        if (!itemsContainer) return;
+
+        if (items.length === 0) {
+            itemsContainer.innerHTML = `<p class="text-slate-400 font-medium italic">Your cart is empty.</p>`;
+            return;
+        }
+
+        itemsContainer.innerHTML = items
+            .map(
+                (item) => `
+            <div class="flex gap-4 group">
+                <div class="w-16 h-20 bg-slate-100 rounded-xl overflow-hidden shrink-0">
+                    <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover" />
+                </div>
+                <div class="flex-1 min-w-0">
+                    <h4 class="text-xs font-black text-slate-950 uppercase italic truncate tracking-tight">
+                        ${item.name}
+                    </h4>
+                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Qty: ${item.quantity}</p>
+                    <p class="text-sm font-black text-slate-950 italic">
+                        ${formatPrice(item.price * (1 - (item.discount || 0) / 100) * item.quantity)}
+                    </p>
+                </div>
+            </div>
+        `,
+            )
+            .join("");
+    });
+
+    totalPrice.subscribe((price) => {
+        if (totalEl) totalEl.textContent = formatPrice(price);
+        if (subtotalEl) subtotalEl.textContent = formatPrice(price);
+    });
+
+    totalSavings.subscribe((savings) => {
+        if (!savingsEl || !savingsContainer) return;
+        if (savings > 0) {
+            savingsContainer.classList.remove("hidden");
+            savingsEl.textContent = `-${formatPrice(savings)}`;
+        } else {
+            savingsContainer.classList.add("hidden");
+        }
+    });
+</script>
