@@ -20,6 +20,17 @@ export const cartItems = persistentAtom<CartItem[]>('cart_items', [], {
     decode: JSON.parse,
 });
 
+// Persist stock overrides to simulate stock reduction
+export const stockOverrides = persistentAtom<Record<string, number>>('stock_overrides', {}, {
+    encode: JSON.stringify,
+    decode: JSON.parse,
+});
+
+export function getEffectiveStock(productId: string, initialStock: number) {
+    const overrides = stockOverrides.get();
+    return productId in overrides ? overrides[productId] : initialStock;
+}
+
 export function toggleCart() {
     isCartOpen.set(!isCartOpen.get());
 }
@@ -34,14 +45,15 @@ export function closeCart() {
 
 export function addToCart(product: Omit<CartItem, 'quantity'>, qty: number = 1) {
     const items = cartItems.get();
+    const currentStock = getEffectiveStock(product.id, product.stock || 0);
     const existingItem = items.find((item) => item.id === product.id);
 
     if (existingItem) {
         const newQuantity = existingItem.quantity + qty;
 
         // Stock limit check
-        if (product.stock !== undefined && newQuantity > product.stock) {
-            return { success: false, message: `Only ${product.stock} units available` };
+        if (newQuantity > currentStock) {
+            return { success: false, message: `Only ${currentStock} units available` };
         }
 
         cartItems.set(
@@ -54,13 +66,12 @@ export function addToCart(product: Omit<CartItem, 'quantity'>, qty: number = 1) 
     } else {
         if (qty > 0) {
             // Stock limit check for new item
-            if (product.stock !== undefined && qty > product.stock) {
-                return { success: false, message: `Only ${product.stock} units available` };
+            if (qty > currentStock) {
+                return { success: false, message: `Only ${currentStock} units available` };
             }
-            cartItems.set([...items, { ...product, quantity: qty }]);
+            cartItems.set([...items, { ...product, quantity: qty, stock: currentStock }]);
         }
     }
-    // Removed openCart() as requested by user
     return { success: true, message: `${product.name} added to cart` };
 }
 
@@ -72,20 +83,38 @@ export function updateQuantity(productId: string, qty: number) {
     const items = cartItems.get();
     const item = items.find(i => i.id === productId);
 
-    if (item && item.stock !== undefined && qty > item.stock) {
-        return { success: false, message: `Only ${item.stock} units available` };
-    }
+    if (item) {
+        const currentStock = getEffectiveStock(productId, item.stock || 0);
+        if (qty > currentStock) {
+            return { success: false, message: `Only ${currentStock} units available` };
+        }
 
-    cartItems.set(
-        items.map((item) =>
-            item.id === productId ? { ...item, quantity: Math.max(0, qty) } : item
-        ).filter(item => item.quantity > 0)
-    );
-    return { success: true };
+        cartItems.set(
+            items.map((item) =>
+                item.id === productId ? { ...item, quantity: Math.max(0, qty) } : item
+            ).filter(item => item.quantity > 0)
+        );
+        return { success: true };
+    }
+    return { success: false, message: "Item not found" };
 }
 
 export function clearCart() {
     cartItems.set([]);
+}
+
+export function completePurchase() {
+    const items = cartItems.get();
+    const overrides = { ...stockOverrides.get() };
+
+    items.forEach(item => {
+        const currentStock = getEffectiveStock(item.id, item.stock || 0);
+        overrides[item.id] = Math.max(0, currentStock - item.quantity);
+    });
+
+    stockOverrides.set(overrides);
+    clearCart();
+    return { success: true };
 }
 
 export const totalPrice = computed(cartItems, (items) => {
