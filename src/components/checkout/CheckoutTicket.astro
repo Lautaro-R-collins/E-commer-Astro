@@ -1,0 +1,121 @@
+---
+import { Icon } from "astro-icon/components";
+---
+
+<div
+    id="ticket-modal"
+    class="fixed inset-0 z-[10000] flex items-center justify-center px-4 pointer-events-none opacity-0 transition-opacity duration-300"
+>
+    <div
+        id="ticket-overlay"
+        class="absolute inset-0 bg-slate-950/80 backdrop-blur-md"
+    >
+    </div>
+
+    <div
+        class="relative bg-white w-full max-w-md rounded-3xl overflow-hidden shadow-2xl scale-95 transition-transform duration-300"
+    >
+        <!-- Ticket Header -->
+        <div class="bg-black text-white p-8 text-center space-y-2">
+            <div
+                class="w-16 h-16 bg-primary rounded-2xl flex items-center justify-center mx-auto mb-4"
+            >
+                <Icon name="lucide:check-circle-2" class="w-8 h-8 text-white" />
+            </div>
+            <h2 class="text-2xl font-black uppercase italic tracking-tighter">
+                Purchase Successful
+            </h2>
+            <p
+                class="text-[10px] font-bold text-white/50 uppercase tracking-[0.2em]"
+            >
+                Order #<span id="ticket-id">TRX-78291</span>
+            </p>
+        </div>
+
+        <!-- Ticket Body -->
+        <div class="p-8 space-y-6 relative">
+            <!-- Jagged Edge Detail -->
+            <div
+                class="absolute -top-1 left-0 right-0 h-2 bg-[radial-gradient(circle_at_10px_0,#fff_10px,transparent_0)] bg-[length:20px_20px]"
+            >
+            </div>
+
+            <div id="ticket-products" class="space-y-4">
+                <!-- Products injected here -->
+            </div>
+
+            <div
+                class="border-t-2 border-slate-100 border-dashed pt-4 space-y-2 text-sm font-bold uppercase tracking-widest text-slate-400"
+            >
+                <div class="flex justify-between">
+                    <span>Date</span>
+                    <span id="ticket-date" class="text-slate-950"
+                        >Jan 26, 2026</span
+                    >
+                </div>
+                <div class="flex justify-between">
+                    <span>Customer</span>
+                    <span id="ticket-customer" class="text-slate-950"
+                        >John Doe</span
+                    >
+                </div>
+            </div>
+
+            <div class="pt-6 border-t border-slate-100">
+                <div class="flex justify-between items-center">
+                    <span
+                        class="text-xl font-black uppercase italic text-slate-950"
+                        >Paid Total</span
+                    >
+                    <span
+                        id="ticket-total"
+                        class="text-3xl font-black italic text-slate-950"
+                        >$ 0</span
+                    >
+                </div>
+            </div>
+
+            <button
+                id="close-ticket"
+                class="w-full bg-slate-950 text-white rounded-2xl py-4 font-black uppercase tracking-widest text-xs hover:bg-slate-800 transition-all cursor-pointer"
+            >
+                Return to Store
+            </button>
+        </div>
+
+        <!-- Decorative bottom punch holes -->
+        <div class="flex justify-around bg-white pb-4">
+            {
+                [...Array(10)].map(() => (
+                    <div class="w-4 h-4 rounded-full bg-slate-950/80 -mb-6 shadow-inner" />
+                ))
+            }
+        </div>
+    </div>
+</div>
+
+<style>
+    #ticket-modal.open {
+        pointer-events: auto;
+        opacity: 1;
+    }
+    #ticket-modal.open > div:last-child {
+        scale: 1;
+    }
+</style>
+
+<script>
+    import { isCartOpen } from "../../store/cartStore";
+
+    const modal = document.getElementById("ticket-modal");
+    const closeBtn = document.getElementById("close-ticket");
+    const overlay = document.getElementById("ticket-overlay");
+
+    const closeAll = () => {
+        modal?.classList.remove("open");
+        window.location.href = "/";
+    };
+
+    closeBtn?.addEventListener("click", closeAll);
+    overlay?.addEventListener("click", closeAll);
+</script>
