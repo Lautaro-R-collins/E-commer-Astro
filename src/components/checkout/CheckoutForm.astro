@@ -1,0 +1,220 @@
+---
+import { Icon } from "astro-icon/components";
+---
+
+<form id="checkout-form" class="space-y-8">
+    <!-- Contact Information -->
+    <section class="space-y-6">
+        <div class="flex items-center gap-3">
+            <div
+                class="w-8 h-8 bg-black rounded-lg flex items-center justify-center text-white text-xs font-black"
+            >
+                1
+            </div>
+            <h3
+                class="text-sm font-black uppercase tracking-widest text-slate-950"
+            >
+                Contact Information
+            </h3>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="form-control w-full">
+                <label class="label"
+                    ><span
+                        class="label-text font-bold text-[10px] uppercase tracking-widest text-slate-400"
+                        >Full Name</span
+                    ></label
+                >
+                <input
+                    type="text"
+                    name="name"
+                    placeholder="John Doe"
+                    class="input input-bordered w-full rounded-xl bg-slate-50 border-slate-200 focus:border-primary focus:bg-white transition-all font-medium"
+                    required
+                />
+            </div>
+            <div class="form-control w-full">
+                <label class="label"
+                    ><span
+                        class="label-text font-bold text-[10px] uppercase tracking-widest text-slate-400"
+                        >Email Address</span
+                    ></label
+                >
+                <input
+                    type="email"
+                    name="email"
+                    placeholder="john@example.com"
+                    class="input input-bordered w-full rounded-xl bg-slate-50 border-slate-200 focus:border-primary focus:bg-white transition-all font-medium"
+                    required
+                />
+            </div>
+        </div>
+    </section>
+
+    <!-- Shipping Details -->
+    <section class="space-y-6">
+        <div class="flex items-center gap-3">
+            <div
+                class="w-8 h-8 bg-black rounded-lg flex items-center justify-center text-white text-xs font-black"
+            >
+                2
+            </div>
+            <h3
+                class="text-sm font-black uppercase tracking-widest text-slate-950"
+            >
+                Shipping Details
+            </h3>
+        </div>
+        <div class="space-y-4">
+            <div class="form-control w-full">
+                <label class="label"
+                    ><span
+                        class="label-text font-bold text-[10px] uppercase tracking-widest text-slate-400"
+                        >Address</span
+                    ></label
+                >
+                <input
+                    type="text"
+                    name="address"
+                    placeholder="123 Luxury Ave"
+                    class="input input-bordered w-full rounded-xl bg-slate-50 border-slate-200 focus:border-primary focus:bg-white transition-all font-medium"
+                    required
+                />
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                <div class="form-control w-full">
+                    <label class="label"
+                        ><span
+                            class="label-text font-bold text-[10px] uppercase tracking-widest text-slate-400"
+                            >City</span
+                        ></label
+                    >
+                    <input
+                        type="text"
+                        name="city"
+                        placeholder="Miami"
+                        class="input input-bordered w-full rounded-xl bg-slate-50 border-slate-200 focus:border-primary focus:bg-white transition-all font-medium"
+                        required
+                    />
+                </div>
+                <div class="form-control w-full">
+                    <label class="label"
+                        ><span
+                            class="label-text font-bold text-[10px] uppercase tracking-widest text-slate-400"
+                            >Country</span
+                        ></label
+                    >
+                    <input
+                        type="text"
+                        name="country"
+                        placeholder="USA"
+                        class="input input-bordered w-full rounded-xl bg-slate-50 border-slate-200 focus:border-primary focus:bg-white transition-all font-medium"
+                        required
+                    />
+                </div>
+                <div class="form-control w-full col-span-2 md:col-span-1">
+                    <label class="label"
+                        ><span
+                            class="label-text font-bold text-[10px] uppercase tracking-widest text-slate-400"
+                            >Postal Code</span
+                        ></label
+                    >
+                    <input
+                        type="text"
+                        name="zip"
+                        placeholder="33101"
+                        class="input input-bordered w-full rounded-xl bg-slate-50 border-slate-200 focus:border-primary focus:bg-white transition-all font-medium"
+                        required
+                    />
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Payment Simulation -->
+    <section class="space-y-6">
+        <div class="flex items-center gap-3">
+            <div
+                class="w-8 h-8 bg-black rounded-lg flex items-center justify-center text-white text-xs font-black"
+            >
+                3
+            </div>
+            <h3
+                class="text-sm font-black uppercase tracking-widest text-slate-950"
+            >
+                Payment Method
+            </h3>
+        </div>
+        <div
+            class="p-6 bg-slate-900 rounded-2xl text-white space-y-4 relative overflow-hidden"
+        >
+            <Icon
+                name="lucide:credit-card"
+                class="absolute -right-4 -bottom-4 w-32 h-32 text-white/5 -rotate-12"
+            />
+            <div class="flex justify-between items-start">
+                <Icon name="lucide:wifi" class="w-8 h-8 rotate-90" />
+                <span
+                    class="text-xs font-black uppercase tracking-widest italic opacity-50"
+                    >Premium Member</span
+                >
+            </div>
+            <div class="space-y-1 py-4">
+                <p
+                    class="text-[10px] font-bold uppercase tracking-[0.3em] opacity-50"
+                >
+                    Card Number
+                </p>
+                <p class="text-xl font-black tracking-[0.2em]">
+                    **** **** **** 4242
+                </p>
+            </div>
+            <div class="flex justify-between border-t border-white/10 pt-4">
+                <div>
+                    <p
+                        class="text-[8px] font-bold uppercase tracking-widest opacity-50"
+                    >
+                        Card Holder
+                    </p>
+                    <p
+                        id="card-holder-display"
+                        class="text-xs font-black uppercase"
+                    >
+                        Your Name
+                    </p>
+                </div>
+                <div>
+                    <p
+                        class="text-[8px] font-bold uppercase tracking-widest opacity-50"
+                    >
+                        Expires
+                    </p>
+                    <p class="text-xs font-black">12/28</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <button
+        type="submit"
+        class="w-full bg-primary hover:bg-primary/80 text-white rounded-2xl py-6 font-black uppercase tracking-[0.2em] text-sm shadow-xl shadow-primary/20 transition-all flex items-center justify-center gap-4 group cursor-pointer"
+    >
+        Complete Purchase
+        <Icon
+            name="lucide:arrow-right"
+            class="w-5 h-5 group-hover:translate-x-1 transition-transform"
+        />
+    </button>
+</form>
+
+<script>
+    const nameInput = document.querySelector('input[name="name"]');
+    const cardHolderDisplay = document.getElementById("card-holder-display");
+
+    nameInput?.addEventListener("input", (e) => {
+        if (cardHolderDisplay) {
+            cardHolderDisplay.textContent =
+                (e.target as HTMLInputElement).value || "Your Name";
+        }
+    });
+</script>
