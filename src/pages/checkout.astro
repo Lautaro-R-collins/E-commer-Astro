@@ -1,0 +1,126 @@
+---
+import Layout from "../layouts/Layout.astro";
+import CheckoutForm from "../components/checkout/CheckoutForm.astro";
+import CheckoutSummary from "../components/checkout/CheckoutSummary.astro";
+import CheckoutTicket from "../components/checkout/CheckoutTicket.astro";
+import { Icon } from "astro-icon/components";
+---
+
+<Layout>
+    <div class="bg-slate-50 min-h-screen py-12 md:py-20 px-4">
+        <div class="max-w-7xl mx-auto">
+            <!-- Breadcrumbs / Back Link -->
+            <a
+                href="/"
+                class="inline-flex items-center gap-2 text-slate-400 hover:text-slate-950 font-bold text-[10px] uppercase tracking-widest transition-colors mb-8 group"
+            >
+                <Icon
+                    name="lucide:arrow-left"
+                    class="w-4 h-4 group-hover:-translate-x-1 transition-transform"
+                />
+                Back to Store
+            </a>
+
+            <div
+                class="grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-12 items-start"
+            >
+                <!-- Left: Form -->
+                <div class="space-y-12">
+                    <div class="space-y-4">
+                        <span
+                            class="text-primary font-black uppercase text-xs tracking-[0.3em] italic"
+                            >Secure Checkout</span
+                        >
+                        <h1
+                            class="text-4xl md:text-5xl font-black text-slate-950 uppercase tracking-tighter italic"
+                        >
+                            Finalize Your Order
+                        </h1>
+                        <p class="text-slate-500 font-medium">
+                            Please provide your details below to complete your
+                            premium purchase.
+                        </p>
+                    </div>
+
+                    <CheckoutForm />
+                </div>
+
+                <!-- Right: Summary -->
+                <CheckoutSummary />
+            </div>
+        </div>
+    </div>
+
+    <CheckoutTicket />
+</Layout>
+
+<script>
+    import {
+        completePurchase,
+        cartItems,
+        totalPrice,
+    } from "../store/cartStore";
+
+    const form = document.getElementById("checkout-form") as HTMLFormElement;
+    const ticketModal = document.getElementById("ticket-modal");
+    const ticketProducts = document.getElementById("ticket-products");
+    const ticketTotal = document.getElementById("ticket-total");
+    const ticketCustomer = document.getElementById("ticket-customer");
+    const ticketDate = document.getElementById("ticket-date");
+    const ticketId = document.getElementById("ticket-id");
+
+    const formatPrice = (price: number) =>
+        new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" })
+            .format(price)
+            .replace("$", "$ ");
+
+    form?.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const formData = new FormData(form);
+        const name = formData.get("name") as string;
+        const currentItems = cartItems.get();
+        const currentTotal = totalPrice.get();
+
+        if (currentItems.length === 0) {
+            alert("Your cart is empty!");
+            return;
+        }
+
+        // Prepare ticket data
+        if (ticketProducts) {
+            ticketProducts.innerHTML = currentItems
+                .map(
+                    (item) => `
+                <div class="flex justify-between items-center text-sm">
+                    <div class="flex flex-col">
+                        <span class="font-black text-slate-950 uppercase italic text-xs tracking-tight">${item.name}</span>
+                        <span class="text-[10px] font-bold text-slate-400">QTY: ${item.quantity}</span>
+                    </div>
+                    <span class="font-black italic text-slate-900">${formatPrice(item.price * (1 - (item.discount || 0) / 100) * item.quantity)}</span>
+                </div>
+            `,
+                )
+                .join("");
+        }
+
+        if (ticketTotal) ticketTotal.textContent = formatPrice(currentTotal);
+        if (ticketCustomer) ticketCustomer.textContent = name;
+        if (ticketDate)
+            ticketDate.textContent = new Date().toLocaleDateString("en-US", {
+                month: "short",
+                day: "numeric",
+                year: "numeric",
+            });
+        if (ticketId)
+            ticketId.textContent =
+                "TRX-" +
+                Math.random().toString(36).substring(2, 11).toUpperCase();
+
+        // Perform "Purchase"
+        completePurchase();
+
+        // Show Ticket Modal
+        ticketModal?.classList.add("open");
+    });
+</script>
