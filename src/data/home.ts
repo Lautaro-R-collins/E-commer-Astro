@@ -6,7 +6,7 @@ export const categories = [
     },
     {
         name: "Phones",
-        image: "https://images.unsplash.com/photo-1556656793-062ff98782a1?q=80&w=2000&auto=format&fit=crop",
+        image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=2000&auto=format&fit=crop",
         path: "/category/phones",
     },
     {
@@ -16,7 +16,7 @@ export const categories = [
     },
     {
         name: "Accessories",
-        image: "https://images.unsplash.com/photo-1615814141018-c2b6067bd6eb?q=80&w=2000&auto=format&fit=crop",
+        image: "https://i.ytimg.com/vi/6nF-4i3RrG0/hq720.jpg?sqp=-oaymwEXCK4FEIIDSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLA1Ir1cXQna8UT0zPxI62l1ZlvvEQ",
         path: "/category/accessories",
     },
 ];
