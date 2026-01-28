@@ -1,29 +1,76 @@
 ---
+interface Props {
+    currentPage: number;
+    totalPages: number;
+    baseUrl?: string;
+}
+
 const { currentPage, totalPages, baseUrl } = Astro.props;
 
-const prevUrl = currentPage > 1 ? `${baseUrl}?page=${currentPage - 1}` : null;
-const nextUrl =
-    currentPage < totalPages ? `${baseUrl}?page=${currentPage + 1}` : null;
-
-// Helper to generate page numbers
 const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
 ---
 
-{
-    totalPages > 1 && (
-        <div class="join grid grid-cols-2 w-full max-w-xs mx-auto mt-12 bg-base-100">
-            <a
-                href={prevUrl || "#"}
-                class={`join-item btn btn-outline ${!prevUrl ? "btn-disabled" : ""}`}
-            >
-                Previous
-            </a>
-            <a
-                href={nextUrl || "#"}
-                class={`join-item btn btn-outline ${!nextUrl ? "btn-disabled" : ""}`}
-            >
-                Next
-            </a>
-        </div>
-    )
-}
+{/* Pagination Component */}
+
+{/* Overwriting with the Home-page style (Page numbers included) */}
+<div class="join">
+    {
+        baseUrl ? (
+            <>
+                <a
+                    href={
+                        currentPage > 1
+                            ? `${baseUrl}?page=${currentPage - 1}`
+                            : "#"
+                    }
+                    class={`join-item btn ${currentPage === 1 ? "btn-disabled" : ""}`}
+                >
+                    «
+                </a>
+                {pages.map((page) => (
+                    <a
+                        href={`${baseUrl}?page=${page}`}
+                        class={`join-item btn ${currentPage === page ? "btn-active" : ""}`}
+                    >
+                        {page}
+                    </a>
+                ))}
+                <a
+                    href={
+                        currentPage < totalPages
+                            ? `${baseUrl}?page=${currentPage + 1}`
+                            : "#"
+                    }
+                    class={`join-item btn ${currentPage === totalPages ? "btn-disabled" : ""}`}
+                >
+                    »
+                </a>
+            </>
+        ) : (
+            <>
+                <button
+                    class="join-item btn pagination-btn"
+                    data-page={currentPage - 1}
+                    disabled={currentPage === 1}
+                >
+                    «
+                </button>
+                {pages.map((page) => (
+                    <button
+                        class={`join-item btn pagination-btn ${currentPage === page ? "btn-active" : ""}`}
+                        data-page={page}
+                    >
+                        {page}
+                    </button>
+                ))}
+                <button
+                    class="join-item btn pagination-btn"
+                    data-page={currentPage + 1}
+                    disabled={currentPage === totalPages}
+                >
+                    »
+                </button>
+            </>
+        )
+    }
+</div>

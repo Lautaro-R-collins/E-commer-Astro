@@ -1,6 +1,10 @@
 ---
 import { products } from "../../data/products";
 import CardProduct from "../products/CardProduct.astro";
+import Pagination from "../ui/Pagination.astro";
+
+const ITEMS_PER_PAGE = 8;
+const totalPages = Math.ceil(products.length / ITEMS_PER_PAGE);
 ---
 
 <section class="pb-10 bg-base-100" id="featured-products-section">
@@ -33,10 +37,8 @@ import CardProduct from "../products/CardProduct.astro";
         </div>
 
         <!-- Pagination Controls -->
-        <div class="flex justify-center mt-12">
-            <div class="join" id="pagination-controls">
-                <!-- Buttons will be injected here by JS -->
-            </div>
+        <div class="flex justify-center mt-12" id="pagination-controls">
+            <Pagination currentPage={1} totalPages={totalPages} />
         </div>
     </div>
 </section>
@@ -45,13 +47,13 @@ import CardProduct from "../products/CardProduct.astro";
     function initPagination() {
         const ITEMS_PER_PAGE = 8;
         const grid = document.getElementById("product-grid");
-        const controls = document.getElementById("pagination-controls");
         const wrappers = document.querySelectorAll(".product-card-wrapper");
+        const paginationButtons = document.querySelectorAll(".pagination-btn");
 
-        if (!grid || !controls || wrappers.length === 0) return;
+        if (!grid || wrappers.length === 0) return;
 
-        const totalPages = Math.ceil(wrappers.length / ITEMS_PER_PAGE);
         let currentPage = 1;
+        const totalPages = Math.ceil(wrappers.length / ITEMS_PER_PAGE);
 
         function renderProducts(page: number) {
             const start = (page - 1) * ITEMS_PER_PAGE;
@@ -66,50 +68,73 @@ import CardProduct from "../products/CardProduct.astro";
             });
         }
 
-        function renderControls(page: number) {
-            if (!controls) return;
-            controls.innerHTML = "";
+        function updateControls(page: number) {
+            paginationButtons.forEach((btn: any) => {
+                const btnPage = parseInt(btn.dataset.page);
 
-            // Previous Button
-            const prevBtn = document.createElement("button");
-            prevBtn.className = "join-item btn";
-            prevBtn.textContent = "«";
-            prevBtn.disabled = page === 1;
-            prevBtn.onclick = () => goToPage(page - 1);
-            controls.appendChild(prevBtn);
+                // Reset states
+                btn.classList.remove("btn-active");
+                btn.disabled = false;
 
-            // Page Numbers
-            for (let i = 1; i <= totalPages; i++) {
-                const btn = document.createElement("button");
-                btn.className = `join-item btn ${i === page ? "btn-active" : ""}`;
-                btn.textContent = String(i);
-                btn.onclick = () => goToPage(i);
-                controls.appendChild(btn);
-            }
+                // Set active state
+                if (btnPage === page) {
+                    btn.classList.add("btn-active");
+                }
 
-            // Next Button
-            const nextBtn = document.createElement("button");
-            nextBtn.className = "join-item btn";
-            nextBtn.textContent = "»";
-            nextBtn.disabled = page === totalPages;
-            nextBtn.onclick = () => goToPage(page + 1);
-            controls.appendChild(nextBtn);
+                // Handle Prev/Next buttons logic
+                if (isNaN(btnPage)) {
+                    // This shouldn't happen based on my new component logic,
+                    // but let's check the dataset.page values.
+                }
+
+                // Disable Prev if on first page
+                if (btn.textContent.trim() === "«" && page === 1) {
+                    btn.disabled = true;
+                    // Update data-page for prev button to be current - 1
+                    btn.dataset.page = page - 1;
+                }
+
+                // Disable Next if on last page
+                if (btn.textContent.trim() === "»" && page === totalPages) {
+                    btn.disabled = true;
+                    // Update data-page for next button to be current + 1
+                    btn.dataset.page = page + 1;
+                }
+
+                // Update Prev/Next targets
+                if (btn.textContent.trim() === "«") {
+                    btn.dataset.page = page - 1;
+                }
+                if (btn.textContent.trim() === "»") {
+                    btn.dataset.page = page + 1;
+                }
+            });
         }
 
         function goToPage(page: number) {
             if (page < 1 || page > totalPages) return;
             currentPage = page;
             renderProducts(currentPage);
-            renderControls(currentPage);
+            updateControls(currentPage);
 
             // Optional: Scroll to top of grid
             // const section = document.getElementById("featured-products-section");
             // section?.scrollIntoView({ behavior: 'smooth' });
         }
 
+        // Attach listeners
+        paginationButtons.forEach((btn: any) => {
+            btn.onclick = () => {
+                const targetPage = parseInt(btn.dataset.page);
+                if (!isNaN(targetPage)) {
+                    goToPage(targetPage);
+                }
+            };
+        });
+
         // Initial render
         renderProducts(currentPage);
-        renderControls(currentPage);
+        updateControls(currentPage);
     }
 
     // Init on load
