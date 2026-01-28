@@ -38,34 +38,114 @@ const breadcrumbItems = [{ label: "Home", href: "/" }, { label: categoryName }];
 
     <div class="bg-white min-h-screen pb-20 pt-10">
         <div class="max-w-7xl mx-auto px-6">
-            <Breadcrumbs items={breadcrumbItems} />
+            <div id="breadcrumbs-container">
+                <Breadcrumbs items={breadcrumbItems} />
+            </div>
 
             <main class="py-12">
-                {
-                    categoryProducts.length > 0 ? (
-                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 animate-fade-in">
-                            {categoryProducts.map((product) => (
+                <div
+                    id="products-grid"
+                    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 animate-fade-in"
+                >
+                    {
+                        categoryProducts.map((product) => (
+                            <div
+                                class="product-item transition-all duration-300"
+                                data-subcategory={
+                                    product.subcategory?.toLowerCase() || ""
+                                }
+                            >
                                 <CardProduct
-                                    title={product.name}
+                                    title={product.title}
                                     price={product.price}
                                     images={product.images}
                                     stock={product.stock}
                                     slug={product.slug}
                                 />
-                            ))}
-                        </div>
-                    ) : (
-                        <div class="text-center py-24 bg-slate-50 rounded-3xl border-2 border-dashed border-slate-200">
-                            <p class="text-slate-400 font-bold uppercase tracking-widest">
-                                No products found in this category
-                            </p>
-                        </div>
-                    )
-                }
+                            </div>
+                        ))
+                    }
+                </div>
+
+                <div
+                    id="no-products-msg"
+                    class="hidden text-center py-24 bg-slate-50 rounded-3xl border-2 border-dashed border-slate-200"
+                >
+                    <p
+                        class="text-slate-400 font-bold uppercase tracking-widest"
+                    >
+                        No products found in this category
+                    </p>
+                </div>
             </main>
         </div>
     </div>
 </Layout>
+
+<script>
+    function filterProducts() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const subCategory = urlParams.get("sub")?.toLowerCase();
+
+        const products = document.querySelectorAll(".product-item");
+        const noProductsMsg = document.getElementById("no-products-msg");
+        let visibleCount = 0;
+
+        if (subCategory) {
+            // Update Breadcrumbs (Visual only)
+            const breadcrumbNav = document.querySelector(
+                'nav[aria-label="Breadcrumb"] ol',
+            );
+            if (breadcrumbNav) {
+                // Check if already added to avoid duplication on re-runs if any
+                if (!document.getElementById("breadcrumb-sub")) {
+                    const li = document.createElement("li");
+                    li.id = "breadcrumb-sub";
+                    li.className = "flex items-center";
+                    li.innerHTML = `
+                        <svg class="w-3 h-3 mx-1 text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+                        </svg>
+                        <span class="ml-1 text-sm font-medium text-gray-500 md:ml-2 capitalize">${subCategory}</span>
+                    `;
+                    breadcrumbNav.appendChild(li);
+                }
+            }
+
+            // Filter logic
+            products.forEach((el) => {
+                const item = el as HTMLElement;
+                const itemSub = item.dataset.subcategory;
+
+                if (itemSub === subCategory) {
+                    item.classList.remove("hidden");
+                    visibleCount++;
+                } else {
+                    item.classList.add("hidden");
+                }
+            });
+        } else {
+            // Show all if no sub param
+            products.forEach((el) => {
+                el.classList.remove("hidden");
+                visibleCount++;
+            });
+        }
+
+        // Show "No products" message
+        if (visibleCount === 0) {
+            noProductsMsg?.classList.remove("hidden");
+        } else {
+            noProductsMsg?.classList.add("hidden");
+        }
+    }
+
+    // Run on load
+    filterProducts();
+
+    // Run on view transitions
+    document.addEventListener("astro:page-load", filterProducts);
+</script>
 
 <style>
     @keyframes fadeIn {
