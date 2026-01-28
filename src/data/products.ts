@@ -5,6 +5,7 @@ export interface Product {
     price: number;
     description: string;
     category: string;
+    subcategory?: string;
     stock: number;
     images: string[];
     slug: string;
@@ -21,6 +22,7 @@ export const products: Product[] = [
         price: 3499,
         description: "The most powerful MacBook Pro ever. With the lightning-fast M3 Max chip, advanced thermal architecture, and a stunning Liquid Retina XDR display, it's designed for those who demand the absolute best in performance and portability.",
         category: "Computers",
+        subcategory: "notebooks",
         stock: 5,
         images: [
             "https://images.unsplash.com/photo-1629131726692-1accd0c53ce0?auto=format&fit=crop&w=800&q=80",
@@ -67,6 +69,7 @@ export const products: Product[] = [
         price: 1199,
         description: "Forged in titanium. Featuring the groundbreaking A17 Pro chip, a customizable Action button, and the most powerful iPhone camera system ever. Experience the next level of mobile technology.",
         category: "Phones",
+        subcategory: "iphone",
         stock: 0,
         images: [
             "https://images.unsplash.com/photo-1696446701796-da61225697cc?auto=format&fit=crop&w=800&q=80",
@@ -111,6 +114,7 @@ export const products: Product[] = [
         price: 799,
         description: "Astonishing performance. Incredibly advanced displays. Superfast wireless connectivity. Next-level Apple Pencil features. Powerful new features in iPadOS. The ultimate iPad experience.",
         category: "Computers",
+        subcategory: "notebooks",
         stock: 15,
         images: [
             "https://images.unsplash.com/photo-1544244015-0cd4b3ffc6b0?auto=format&fit=crop&w=800&q=80",
@@ -133,6 +137,7 @@ export const products: Product[] = [
         price: 1899,
         description: "High-performance laptop with a stunning 4K OLED display and premium build quality.",
         category: "Computers",
+        subcategory: "notebooks",
         stock: 10,
         images: [
             "https://images.unsplash.com/photo-1593642632823-8f78536788c6?auto=format&fit=crop&w=800&q=80",
@@ -152,6 +157,7 @@ export const products: Product[] = [
         price: 1299,
         description: "Impossibly thin and incredibly fast. The 15-inch MacBook Air gives you more room for what you love with a spacious Liquid Retina display.",
         category: "Computers",
+        subcategory: "notebooks",
         stock: 25,
         images: [
             "https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?auto=format&fit=crop&w=800&q=80",
@@ -172,6 +178,7 @@ export const products: Product[] = [
         price: 1499,
         description: "Powerful gaming in a compact chassis. Features the latest Ryzen processors and RTX graphics for gaming on the go.",
         category: "Computers",
+        subcategory: "notebooks",
         stock: 8,
         images: [
             "https://images.unsplash.com/photo-1630731637539-881f2142d76f?auto=format&fit=crop&w=800&q=80",
@@ -192,6 +199,7 @@ export const products: Product[] = [
         price: 1299,
         description: "Unleash your creativity, productivity, and possibilities. With a built-in S Pen and the most powerful processor yet.",
         category: "Phones",
+        subcategory: "android",
         stock: 20,
         images: [
             "https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?auto=format&fit=crop&w=800&q=80",
@@ -212,6 +220,7 @@ export const products: Product[] = [
         price: 999,
         description: "The all-pro phone engineered by Google. It has a polished aluminum frame and matte back glass, and it comes in elegant colors.",
         category: "Phones",
+        subcategory: "android",
         stock: 15,
         images: [
             "https://images.unsplash.com/photo-1698223608753-4811a2212952?auto=format&fit=crop&w=800&q=80",
@@ -232,6 +241,7 @@ export const products: Product[] = [
         price: 699,
         description: "A total powerhouse. Impressive battery life, durable build, and a camera system that takes stunning photos in any light.",
         category: "Phones",
+        subcategory: "iphone",
         stock: 30,
         images: [
             "https://images.unsplash.com/photo-1678652197831-2d180705cd2c?auto=format&fit=crop&w=800&q=80",
@@ -308,7 +318,8 @@ export const products: Product[] = [
         title: "Keychron Q1 Pro",
         price: 199,
         description: "A fully customizable mechanical keyboard with QMK/VIA support and a premium aluminum body.",
-        category: "Accessories",
+        category: "Computers",
+        subcategory: "keyboards",
         stock: 30,
         images: [
             "https://images.unsplash.com/photo-1595225476474-87563907a212?auto=format&fit=crop&w=800&q=80",
@@ -366,7 +377,8 @@ export const products: Product[] = [
         title: "Dell UltraSharp 27",
         price: 499,
         description: "Experience captivating details and true-to-life color on this 27-inch QHD monitor with InfinityEdge.",
-        category: "Accessories",
+        category: "Computers",
+        subcategory: "monitors",
         stock: 12,
         images: [
             "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?auto=format&fit=crop&w=800&q=80",
@@ -406,6 +418,7 @@ export const products: Product[] = [
         price: 899,
         description: "The advanced LG OLED evo C-Series is better than ever. The LG OLED evo C3 is powered by the next-gen a9 AI Processor Gen6.",
         category: "Computers",
+        subcategory: "monitors",
         stock: 6,
         images: [
             "https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?auto=format&fit=crop&w=800&q=80",
