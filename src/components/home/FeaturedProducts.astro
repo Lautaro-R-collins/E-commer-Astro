@@ -1,9 +1,9 @@
 ---
-import { featuredProducts } from "../../data/home";
+import { products } from "../../data/products";
 import CardProduct from "../products/CardProduct.astro";
 ---
 
-<section class="pb-10 bg-base-100">
+<section class="pb-10 bg-base-100" id="featured-products-section">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between mb-12">
             <h2
@@ -13,18 +13,108 @@ import CardProduct from "../products/CardProduct.astro";
             </h2>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div
+            id="product-grid"
+            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 min-h-[800px]"
+        >
             {
-                featuredProducts.map((product) => (
-                    <CardProduct
-                        title={product.title}
-                        price={product.price}
-                        stock={product.stock}
-                        images={product.images}
-                        slug={product.slug}
-                    />
+                products.map((product) => (
+                    <div class="product-card-wrapper hidden">
+                        <CardProduct
+                            title={product.title}
+                            price={product.price}
+                            stock={product.stock}
+                            images={product.images}
+                            slug={product.slug}
+                        />
+                    </div>
                 ))
             }
         </div>
+
+        <!-- Pagination Controls -->
+        <div class="flex justify-center mt-12">
+            <div class="join" id="pagination-controls">
+                <!-- Buttons will be injected here by JS -->
+            </div>
+        </div>
     </div>
 </section>
+
+<script>
+    function initPagination() {
+        const ITEMS_PER_PAGE = 8;
+        const grid = document.getElementById("product-grid");
+        const controls = document.getElementById("pagination-controls");
+        const wrappers = document.querySelectorAll(".product-card-wrapper");
+
+        if (!grid || !controls || wrappers.length === 0) return;
+
+        const totalPages = Math.ceil(wrappers.length / ITEMS_PER_PAGE);
+        let currentPage = 1;
+
+        function renderProducts(page: number) {
+            const start = (page - 1) * ITEMS_PER_PAGE;
+            const end = start + ITEMS_PER_PAGE;
+
+            wrappers.forEach((wrapper, index) => {
+                if (index >= start && index < end) {
+                    wrapper.classList.remove("hidden");
+                } else {
+                    wrapper.classList.add("hidden");
+                }
+            });
+        }
+
+        function renderControls(page: number) {
+            if (!controls) return;
+            controls.innerHTML = "";
+
+            // Previous Button
+            const prevBtn = document.createElement("button");
+            prevBtn.className = "join-item btn";
+            prevBtn.textContent = "«";
+            prevBtn.disabled = page === 1;
+            prevBtn.onclick = () => goToPage(page - 1);
+            controls.appendChild(prevBtn);
+
+            // Page Numbers
+            for (let i = 1; i <= totalPages; i++) {
+                const btn = document.createElement("button");
+                btn.className = `join-item btn ${i === page ? "btn-active" : ""}`;
+                btn.textContent = String(i);
+                btn.onclick = () => goToPage(i);
+                controls.appendChild(btn);
+            }
+
+            // Next Button
+            const nextBtn = document.createElement("button");
+            nextBtn.className = "join-item btn";
+            nextBtn.textContent = "»";
+            nextBtn.disabled = page === totalPages;
+            nextBtn.onclick = () => goToPage(page + 1);
+            controls.appendChild(nextBtn);
+        }
+
+        function goToPage(page: number) {
+            if (page < 1 || page > totalPages) return;
+            currentPage = page;
+            renderProducts(currentPage);
+            renderControls(currentPage);
+
+            // Optional: Scroll to top of grid
+            // const section = document.getElementById("featured-products-section");
+            // section?.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Initial render
+        renderProducts(currentPage);
+        renderControls(currentPage);
+    }
+
+    // Init on load
+    initPagination();
+
+    // Init on View Transitions navigation
+    document.addEventListener("astro:page-load", initPagination);
+</script>
