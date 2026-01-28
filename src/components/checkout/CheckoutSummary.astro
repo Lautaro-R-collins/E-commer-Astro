@@ -40,7 +40,7 @@ import { Icon } from "astro-icon/components";
         </div>
         <div
             id="checkout-savings-container"
-            class="hidden flex justify-between text-emerald-600 font-black text-xs uppercase tracking-widest bg-emerald-50 p-2 rounded-lg"
+            class="hidden justify-between text-emerald-600 font-black text-xs uppercase tracking-widest bg-emerald-50 p-2 rounded-lg"
         >
             <span>Total Savings</span>
             <span id="checkout-savings">-$ 0</span>
@@ -128,9 +128,11 @@ import { Icon } from "astro-icon/components";
         if (!savingsEl || !savingsContainer) return;
         if (savings > 0) {
             savingsContainer.classList.remove("hidden");
+            savingsContainer.classList.add("flex");
             savingsEl.textContent = `-${formatPrice(savings)}`;
         } else {
             savingsContainer.classList.add("hidden");
+            savingsContainer.classList.remove("flex");
         }
     });
 </script>
