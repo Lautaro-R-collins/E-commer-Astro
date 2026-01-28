@@ -34,15 +34,23 @@ import Links from "./Links.astro";
 
         <!-- Right Side: Icons -->
         <div class="navbar-end gap-2 sm:gap-4">
-            <button
+            <a
+                href="/favorites"
                 class="btn btn-ghost btn-circle hover:bg-primary/10 transition-colors"
                 aria-label="Favorites"
             >
-                <Icon
-                    name="lucide:heart"
-                    class="w-6 h-6 hover:text-primary transition-colors"
-                />
-            </button>
+                <div class="indicator">
+                    <Icon
+                        name="lucide:heart"
+                        class="w-6 h-6 hover:text-primary transition-colors"
+                    />
+                    <span
+                        id="nav-fav-count"
+                        class="badge badge-sm badge-primary indicator-item border-none hidden"
+                        >0</span
+                    >
+                </div>
+            </a>
             <button
                 id="cart-button"
                 class="btn btn-ghost btn-circle hover:bg-primary/10 transition-colors"
@@ -67,11 +75,13 @@ import Links from "./Links.astro";
 
 <script>
     import { toggleCart, totalItems } from "../../store/cartStore";
+    import { totalFavorites } from "../../store/favoriteStore";
 
     let lastScrollY = window.scrollY;
     const navbar = document.getElementById("main-navbar");
     const cartBtn = document.getElementById("cart-button");
     const navCartCount = document.getElementById("nav-cart-count");
+    const navFavCount = document.getElementById("nav-fav-count");
 
     // Handle cart toggle
     cartBtn?.addEventListener("click", (e) => {
@@ -87,6 +97,17 @@ import Links from "./Links.astro";
             navCartCount.textContent = String(count);
         } else {
             navCartCount.classList.add("hidden");
+        }
+    });
+
+    // Update favorites count in navbar
+    totalFavorites.subscribe((count) => {
+        if (!navFavCount) return;
+        if (count > 0) {
+            navFavCount.classList.remove("hidden");
+            navFavCount.textContent = String(count);
+        } else {
+            navFavCount.classList.add("hidden");
         }
     });
 
