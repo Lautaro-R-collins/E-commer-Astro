@@ -72,7 +72,7 @@ export const products: Product[] = [
         subcategory: "iphone",
         stock: 0,
         images: [
-            "https://images.unsplash.com/photo-1696446701796-da61225697cc?auto=format&fit=crop&w=800&q=80",
+            "https://i.blogs.es/f15f0b/img_2033/650_1200.jpeg",
             "https://images.unsplash.com/photo-1678652197831-2d180705cd2c?auto=format&fit=crop&w=800&q=80"
         ],
         slug: "iphone-15-pro-max",
@@ -95,7 +95,7 @@ export const products: Product[] = [
         stock: 50,
         images: [
             "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?auto=format&fit=crop&w=800&q=80",
-            "https://images.unsplash.com/photo-1607677686474-ad91fe9da900?auto=format&fit=crop&w=800&q=80"
+            "https://www.mastecnologia.com.ar/images/productos/17101.png"
         ],
         slug: "logitech-mx-master-3s",
         badge: "Essential",
@@ -117,8 +117,8 @@ export const products: Product[] = [
         subcategory: "notebooks",
         stock: 15,
         images: [
-            "https://images.unsplash.com/photo-1544244015-0cd4b3ffc6b0?auto=format&fit=crop&w=800&q=80",
-            "https://images.unsplash.com/photo-1511385348-a52b4a160dc2?auto=format&fit=crop&w=800&q=80"
+            "https://i.guim.co.uk/img/media/23b25aa93e573bc0b016c0e6e9233bc51da92c54/0_240_5261_3156/master/5261.jpg?width=1200&quality=85&auto=format&fit=max&s=5f0115e164644ebfdbc3c86ee86c163b",
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQonjUvhTVx33qjjjCrRp68MDRAlt_1uqA9YA&s"
         ],
         slug: "ipad-pro-m2",
         badge: "Pro",
@@ -140,8 +140,7 @@ export const products: Product[] = [
         subcategory: "notebooks",
         stock: 10,
         images: [
-            "https://images.unsplash.com/photo-1593642632823-8f78536788c6?auto=format&fit=crop&w=800&q=80",
-            "https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?auto=format&fit=crop&w=800&q=80"
+            "https://images-cdn.ubuy.qa/634ea45745ed0860dc58d75b-dell-xps-15-9510-laptop-2021.jpg",
         ],
         slug: "dell-xps-15",
         specs: [
@@ -181,8 +180,7 @@ export const products: Product[] = [
         subcategory: "notebooks",
         stock: 8,
         images: [
-            "https://images.unsplash.com/photo-1630731637539-881f2142d76f?auto=format&fit=crop&w=800&q=80",
-            "https://images.unsplash.com/photo-1592665128080-60b5406d4e51?auto=format&fit=crop&w=800&q=80"
+            "https://www.cnet.com/a/img/resize/69c350f19a0bd245ab8f60a98e456fa9dc67ee42/hub/2024/02/05/e716f8f8-a7a4-418c-9b14-0b210d9dfc72/asus-rog-zephyrus-g14-2024-5409.jpg?auto=webp&fit=crop&height=1200&width=1200",
         ],
         slug: "asus-rog-zephyrus-g14",
         badge: "Gaming",
@@ -202,8 +200,7 @@ export const products: Product[] = [
         subcategory: "android",
         stock: 20,
         images: [
-            "https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?auto=format&fit=crop&w=800&q=80",
-            "https://images.unsplash.com/photo-1678911820864-e2c71fcf4d9a?auto=format&fit=crop&w=800&q=80"
+            "https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?auto=format&fit=crop&w=800&q=80"
         ],
         slug: "samsung-galaxy-s24-ultra",
         badge: "AI Ready",
@@ -223,8 +220,8 @@ export const products: Product[] = [
         subcategory: "android",
         stock: 15,
         images: [
-            "https://images.unsplash.com/photo-1698223608753-4811a2212952?auto=format&fit=crop&w=800&q=80",
-            "https://images.unsplash.com/photo-1598327105666-5b89351aff23?auto=format&fit=crop&w=800&q=80"
+            "https://lh3.googleusercontent.com/22AC6Qcb5-4qN6QJTkBzGK2N5kS5AZyuss9AcAQzAuxjHqGz3VfI5-MSXsKDzuUuePoqHAmyAFyewt9CdNyw3oQikUDY7dTSmyDsVPo=rw-e365-w842-v1",
+            "https://tecnopolis.com.bo/cdn/shop/files/8-PRO.png?v=1763581431"
         ],
         slug: "google-pixel-8-pro",
         badge: "Smartest",
@@ -245,7 +242,6 @@ export const products: Product[] = [
         stock: 30,
         images: [
             "https://images.unsplash.com/photo-1678652197831-2d180705cd2c?auto=format&fit=crop&w=800&q=80",
-            "https://images.unsplash.com/photo-1512054502232-1b5ea360aa3d?auto=format&fit=crop&w=800&q=80"
         ],
         slug: "iphone-14",
         specs: [
@@ -263,7 +259,6 @@ export const products: Product[] = [
         category: "Audio",
         stock: 10,
         images: [
-            "https://images.unsplash.com/photo-1609141074092-74c0e64c01d4?auto=format&fit=crop&w=800&q=80",
             "https://images.unsplash.com/photo-1613040809024-b4ef7ba99bc3?auto=format&fit=crop&w=800&q=80"
         ],
         slug: "airpods-max",
@@ -283,8 +278,7 @@ export const products: Product[] = [
         category: "Audio",
         stock: 18,
         images: [
-            "https://images.unsplash.com/photo-1545127398-14699f92334b?auto=format&fit=crop&w=800&q=80",
-            "https://images.unsplash.com/photo-1484704849700-f032a568e944?auto=format&fit=crop&w=800&q=80"
+            "https://m.media-amazon.com/images/I/51ZR4lyxBHL.jpg",
         ],
         slug: "bose-qc-ultra",
         specs: [
@@ -302,8 +296,7 @@ export const products: Product[] = [
         category: "Audio",
         stock: 22,
         images: [
-            "https://images.unsplash.com/photo-1543512214-318c77a072d8?auto=format&fit=crop&w=800&q=80",
-            "https://images.unsplash.com/photo-1588665798950-891963283f5e?auto=format&fit=crop&w=800&q=80"
+            "https://culturageek.com.ar/wp-content/uploads/2024/12/566898-Era-100-Pro_Mount-Ceiling_Black-309023-original-1733603775_11zon.webp",
         ],
         slug: "sonos-era-100",
         specs: [
@@ -323,7 +316,7 @@ export const products: Product[] = [
         stock: 30,
         images: [
             "https://images.unsplash.com/photo-1595225476474-87563907a212?auto=format&fit=crop&w=800&q=80",
-            "https://images.unsplash.com/photo-1587829741301-308231f8eb98?auto=format&fit=crop&w=800&q=80"
+            "https://i.ytimg.com/vi/URjj7-QghHs/maxresdefault.jpg"
         ],
         slug: "keychron-q1-pro",
         badge: "Mechanical",
@@ -342,7 +335,6 @@ export const products: Product[] = [
         category: "Accessories",
         stock: 40,
         images: [
-            "https://images.unsplash.com/photo-1630138350573-c40d6556c57e?auto=format&fit=crop&w=800&q=80",
             "https://images.unsplash.com/photo-1522204538344-922f76ecc041?auto=format&fit=crop&w=800&q=80"
         ],
         slug: "magic-trackpad",
@@ -361,8 +353,7 @@ export const products: Product[] = [
         category: "Accessories",
         stock: 100,
         images: [
-            "https://images.unsplash.com/photo-1597872252165-482f64379a2f?auto=format&fit=crop&w=800&q=80",
-            "https://images.unsplash.com/photo-1555618568-b8077b98379a?auto=format&fit=crop&w=800&q=80"
+            "https://http2.mlstatic.com/D_NQ_NP_646728-CBT96610611509_102025-O.webp",
         ],
         slug: "samsung-t7-shield",
         specs: [
@@ -382,7 +373,6 @@ export const products: Product[] = [
         stock: 12,
         images: [
             "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?auto=format&fit=crop&w=800&q=80",
-            "https://images.unsplash.com/photo-1542736667-069246bdbc6d?auto=format&fit=crop&w=800&q=80"
         ],
         slug: "dell-ultrasharp-27",
         specs: [
@@ -401,7 +391,6 @@ export const products: Product[] = [
         stock: 3,
         images: [
             "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=800&q=80",
-            "https://images.unsplash.com/photo-1502920917128-1aa500764cbd?auto=format&fit=crop&w=800&q=80"
         ],
         slug: "fujifilm-x100v",
         badge: "Limited",
@@ -422,7 +411,7 @@ export const products: Product[] = [
         stock: 6,
         images: [
             "https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?auto=format&fit=crop&w=800&q=80",
-            "https://images.unsplash.com/photo-1509281373149-e957c629640d?auto=format&fit=crop&w=800&q=80"
+
         ],
         slug: "lg-c3-oled-42",
         badge: "Display",
