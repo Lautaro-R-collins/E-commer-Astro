@@ -2,6 +2,8 @@
 
 A modern, high-performance E-commerce template built with **Astro 5**, **React 19**, and **Tailwind CSS 4**. Designed for speed, SEO, and specific aesthetic appeal, featuring a fully functional shopping cart, favorites system, blog, and more.
 
+![astroEcommers](https://github.com/user-attachments/assets/dff02a23-5c09-4737-85a5-60d00fea14af)
+
 
 ## ✨ Features
 
