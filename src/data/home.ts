@@ -38,6 +38,14 @@ export const featuredLinks = [
         className: "lg:col-span-2",
         imageClass: "aspect-square lg:aspect-[2/1]",
     },
+    {
+        name: "Contact Us",
+        image:
+            "https://voca-land.sgp1.cdn.digitaloceanspaces.com/-1/1635919600965/contact-us.jpeg",
+        path: "/contact",
+        className: "lg:col-span-4",
+        imageClass: "aspect-[2/1] lg:aspect-[4/1]",
+    },
 ];
 
 export const featuredProducts = [
