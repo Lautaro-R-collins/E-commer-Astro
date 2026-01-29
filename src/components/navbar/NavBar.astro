@@ -7,69 +7,71 @@ import Links from "./Links.astro";
     id="main-navbar"
     class="sticky top-0 z-999 w-full font-sans transition-transform duration-300"
 >
-    <nav class="navbar bg-base-100 shadow-md px-4 sm:px-8">
-        <!-- Left Side: Logo -->
-        <div class="navbar-start">
-            <a href="/" class="flex items-center gap-2 group">
-                <div
-                    class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center group-hover:rotate-12 transition-transform shadow-sm"
-                >
-                    <Icon
-                        name="lucide:shopping-bag"
-                        class="w-5 h-5 text-primary-content"
-                    />
-                </div>
-                <span
-                    class="text-xl font-bold tracking-tighter sm:text-2xl gradient-text"
-                >
-                    E-COMMER
-                </span>
-            </a>
-        </div>
-
-        <!-- Middle Space -->
-        <div class="navbar-center hidden lg:flex">
-            <!-- Optional: Add main navigation links here if needed later -->
-        </div>
-
-        <!-- Right Side: Icons -->
-        <div class="navbar-end gap-2 sm:gap-4">
-            <a
-                href="/favorites"
-                class="btn btn-ghost btn-circle hover:bg-primary/10 transition-colors"
-                aria-label="Favorites"
-            >
-                <div class="indicator">
-                    <Icon
-                        name="lucide:heart"
-                        class="w-6 h-6 hover:text-primary transition-colors"
-                    />
-                    <span
-                        id="nav-fav-count"
-                        class="badge badge-sm badge-primary indicator-item border-none hidden"
-                        >0</span
+    <div class="bg-base-100 shadow-md">
+        <nav class="navbar max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Left Side: Logo -->
+            <div class="navbar-start">
+                <a href="/" class="flex items-center gap-2 group">
+                    <div
+                        class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center group-hover:rotate-12 transition-transform shadow-sm"
                     >
-                </div>
-            </a>
-            <button
-                id="cart-button"
-                class="btn btn-ghost btn-circle hover:bg-primary/10 transition-colors"
-                aria-label="Shopping Cart"
-            >
-                <div class="indicator">
-                    <Icon
-                        name="lucide:shopping-cart"
-                        class="w-6 h-6 hover:text-primary transition-colors"
-                    />
+                        <Icon
+                            name="lucide:shopping-bag"
+                            class="w-5 h-5 text-primary-content"
+                        />
+                    </div>
                     <span
-                        id="nav-cart-count"
-                        class="badge badge-sm badge-primary indicator-item border-none hidden"
-                        >0</span
+                        class="text-xl font-bold tracking-tighter sm:text-2xl gradient-text"
                     >
-                </div>
-            </button>
-        </div>
-    </nav>
+                        E-COMMER
+                    </span>
+                </a>
+            </div>
+
+            <!-- Middle Space -->
+            <div class="navbar-center hidden lg:flex">
+                <!-- Optional: Add main navigation links here if needed later -->
+            </div>
+
+            <!-- Right Side: Icons -->
+            <div class="navbar-end gap-2 sm:gap-4">
+                <a
+                    href="/favorites"
+                    class="btn btn-ghost btn-circle hover:bg-primary/10 transition-colors"
+                    aria-label="Favorites"
+                >
+                    <div class="indicator">
+                        <Icon
+                            name="lucide:heart"
+                            class="w-6 h-6 hover:text-primary transition-colors"
+                        />
+                        <span
+                            id="nav-fav-count"
+                            class="badge badge-sm badge-primary indicator-item border-none hidden"
+                            >0</span
+                        >
+                    </div>
+                </a>
+                <button
+                    id="cart-button"
+                    class="btn btn-ghost btn-circle hover:bg-primary/10 transition-colors"
+                    aria-label="Shopping Cart"
+                >
+                    <div class="indicator">
+                        <Icon
+                            name="lucide:shopping-cart"
+                            class="w-6 h-6 hover:text-primary transition-colors"
+                        />
+                        <span
+                            id="nav-cart-count"
+                            class="badge badge-sm badge-primary indicator-item border-none hidden"
+                            >0</span
+                        >
+                    </div>
+                </button>
+            </div>
+        </nav>
+    </div>
     <Links />
 </div>
 
