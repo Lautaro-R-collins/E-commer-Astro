@@ -44,7 +44,7 @@ export const blogPosts = [
         title: "Why You Need a Mechanical Keyboard",
         date: "December 28, 2023",
         author: "Key Master",
-        image: "https://images.unsplash.com/photo-1587829741301-379b3626c929?auto=format&fit=crop&w=800&q=80",
+        image: "https://d1q3zw97enxzq2.cloudfront.net/images/K65_PLUS_WIRELESS_14_2.width-1000.format-webp.webp",
         description: "The benefits of tactile feedback and customization for your daily workflow.",
         content: `
       <p>Once you go mechanical, you never go back. The tactile feedback not only feels great but can also improve your typing speed and accuracy.</p>
@@ -52,15 +52,26 @@ export const blogPosts = [
     `
     },
     {
-        slug: "smart-home-guide",
-        title: "Beginner's Guide to Smart Home Automation",
-        date: "December 20, 2023",
-        author: "Home Bot",
-        image: "https://images.unsplash.com/photo-1558002038-1091a166273c?auto=format&fit=crop&w=800&q=80",
-        description: "Start automating your lights, locks, and thermostat today.",
+        slug: "gaming-monitors",
+        title: "Best Gaming Monitors Under $500",
+        date: "December 15, 2023",
+        author: "Gamer Pro",
+        image: "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?auto=format&fit=crop&w=800&q=80",
+        description: "High refresh rates and low response times without breaking the bank.",
         content: `
-      <p>Smart homes are no longer a thing of the future. With affordable hubs and devices, anyone can upgrade their living space.</p>
-      <p>We recommend starting with smart bulbs and smart plugs as an entry point.</p>
+      <p>You don't have to spend a fortune to get a competitive edge. We've rounded up the best budget-friendly gaming monitors.</p>
+      <p>Look for IPS panels with at least 144Hz refresh rate.</p>
+    `
+    },
+    {
+        slug: "tech-trends-2024",
+        title: "Emerging Tech Trends in 2024",
+        date: "January 20, 2024",
+        author: "Tech Visionary",
+        image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=800&q=80",
+        description: "What to expect in the world of technology this coming year.",
+        content: `
+      <p>From AI integration in everything to sustainable tech solutions, 2024 promises to be an exciting year.</p>
     `
     },
     {
